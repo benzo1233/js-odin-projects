@@ -2,66 +2,108 @@
 // NOW IMPROVE BY SEPARATING
 // CONSTANTS -> STATES -> DOM REFERENCES -> EVENT LISTENERS -> FUNCTIONS
 
-
-function getComputerChoice() {
-  const choices = ["rock", "paper", "scissors"];
-  return choices[Math.floor(Math.random() * 3)];
-}
+const winConditions = {
+  rock: "scissors",
+  paper: "rock",
+  scissors: "paper",
+};  
 
 const rock = document.getElementById("rock");
 const scissors = document.getElementById("scissors");
 const paper = document.getElementById("paper");
 const results = document.getElementById("results");
 
-rock.addEventListener("click", () => playGame("rock"));
-scissors.addEventListener("click", () => playGame("scissors"));
-paper.addEventListener("click", () => playGame("paper"));
+rock.addEventListener("click", () => controller.playGame("rock"));
+scissors.addEventListener("click", () => controller.playGame("scissors"));
+paper.addEventListener("click", () => controller.playGame("paper"));
 
-let humanScore = 0;
-let computerScore = 0;
-let gameOver = false;
 
-function playGame(playerSelection) {
-  if (gameOver) return;
+//Model, handles data and game state
+const game = {
+  humanScore : 0,
+  computerScore : 0,
+  roundResult : 0,
+  gameOver : false,
 
-  function playRound(humanChoice, computerChoice) {
-    const hand = document.createElement("p");
-    const result = document.createElement("p");
-    const finalResult = document.createElement("p");
-
-    const winConditions = {
-      rock: "scissors",
-      paper: "rock",
-      scissors: "paper",
-    };
+  playRound (humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-      result.textContent = "TIE!";
+      this.roundResult = 0;
     } else if (winConditions[humanChoice] === computerChoice) {
-      result.textContent = "You Win!";
-      humanScore++;
+      this.roundResult = 1;
+      this.humanScore++;
     } else {
-      result.textContent = "You Lose!!";
-      computerScore++;
-    }
-    hand.textContent = `You: ${playerSelection} : Bot: ${computerChoice}`;
+      this.roundResult = -1;
+      this.computerScore++;
+    }  
     
-    if (humanScore == 5 || computerScore == 5) {
-      finalResult.style.fontWeight = "bold";
-      finalResult.textContent = `==== Final Score: You = ${humanScore} : Bot = ${computerScore} ====`;
-      gameOver = true;
-    } else {
-      finalResult.textContent = `Score: You = ${humanScore} : Bot = ${computerScore}`;
+    if (this.humanScore == 5 || this.computerScore == 5) {
+      this.gameOver = true;
     }
-    results.appendChild(finalResult);
-    results.appendChild(hand);
-    results.appendChild(result);
 
+    return {
+      humanScore: this.humanScore,
+      computerScore: this.computerScore,
+      humanChoice: humanChoice,
+      computerChoice : computerChoice,
+      roundResult: this.roundResult,
+      gameOver: this.gameOver
+    }
+  }  
+}  
+
+
+//view, handles rendering of ui
+const view = {
+  hand : document.createElement("p"),
+  result : document.createElement("p"),
+  score: document.createElement("p"),
+  finalResult : document.createElement("p"),
+
+  render (gameResult) {
+    this.hand.textContent = `You: ${gameResult.humanChoice} : Bot: ${gameResult.computerChoice}`
+    this.score.textContent = `Score: ${gameResult.humanScore} : ${gameResult.computerScore}`
+
+    if (gameResult.roundResult === 1) {
+      this.result.textContent = "You Win!";
+    } else if (gameResult.roundResult === -1) {
+      this.result.textContent = "You Lose!";
+    } else {
+      this.result.textContent = "You Tie!";
+    }
+
+    results.appendChild(this.hand);
+    results.appendChild(this.result);
+    results.appendChild(this.score);
+    
+    if (gameResult.gameOver) {
+      this.finalResult.style.fontWeight = "bold",
+      this.finalResult.textContent = `FINAL Score: ${gameResult.humanScore} : ${gameResult.computerScore}`
+      results.appendChild(this.finalResult);
+    }
   }
-  playRound(playerSelection, getComputerChoice());
 
-  // console.log("GAME OVER!");
-  // console.log(`Final Score: ${humanScore} : ${computerScore}`);
 }
 
-// const generator = document.querySelector("#generator");
-// generator.addEventListener("click", () => playGame());
+
+// controller: calls upon modal to update game and then view to render
+const controller = {
+  playGame(playerSelection) {
+    if (game.gameOver) return;
+
+    const computerChoice = getComputerChoice();
+    const gameResult = game.playRound(playerSelection, computerChoice);
+
+    view.render(gameResult);
+  }
+}
+
+
+function getComputerChoice() {
+  const choices = ["rock", "paper", "scissors"];
+  return choices[Math.floor(Math.random() * 3)];
+}
+
+
+
+
+
