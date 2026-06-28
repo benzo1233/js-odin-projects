@@ -15,8 +15,8 @@ encapsulate code above and run it 16 times.
 
 // Further Note: Make it a func?
 
-const generateBoard = document.querySelector("#generateBoard");
 const board = document.querySelector("#board");
+const reset = document.querySelector("#reset");
 
 function createRow () {
     const container = document.createElement("div");
@@ -29,6 +29,8 @@ function createRow () {
         container.appendChild(div);
 
         div.addEventListener("mouseenter", () => div.style.background = "orange");
+        reset.addEventListener("click", () => div.style.background = "");
+
     }
     board.appendChild(container);
 }
@@ -44,9 +46,5 @@ function createBoard () {
     createCol(8);
 }
 
-
-
-generateBoard.addEventListener("click", () => createBoard());
-
-
+createBoard();
 
