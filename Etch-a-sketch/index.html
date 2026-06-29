@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
+    <script src="scripts.js" type="module" ></script> 
+    <!-- Instead of using defer, we can declare type="module" which does the same thing and enforces strict mode on our scripts file -->
 </head>
 <body>
     <h1>Etch-a-sketch!</h1>
+    <form id="rowColForm">
+        <label for="rows"></label>
+        <input type="number" name="rows" placeholder="Enter # of Rows">
+        by
+        <label for="cols"></label>
+        <input type="number" name="cols" placeholder="Enter # of Cols">
+        <button>Submit</button>
+    </form>
     <section id = "board"></section>
     <button id = "reset">Reset Board</button>
 </body>
