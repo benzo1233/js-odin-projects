@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.calc_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border: 5px solid red;
+    background-color: orange;
+}
+
+.display {
+    grid-column: 1 / -1;
+    background-color: yellow;
+    margin-bottom: 10px;;
+}
+
+table > tbody > tr > td {
+    align-items: center;
+    border-style: solid;
+    background-color: yellow;
+}
