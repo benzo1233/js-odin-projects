@@ -1,35 +1,35 @@
-const num = document.querySelectorAll(".num");
-const operator = document.querySelectorAll(".operator");
-const clear = document.querySelector(".clear");
-const enter = document.querySelector(".equal");
-let display = document.querySelector(".display");
+const numButtons = document.querySelectorAll(".num");
+const operatorButtons = document.querySelectorAll(".operator");
+const clearButton = document.querySelector(".clear");
+const enterButton = document.querySelector(".equal");
+let displayElement = document.querySelector(".display");
 
-let displayNum = 0;
-let sign = "";
-let numOne;
+let currInput = "";
+let currOperator = "";
+let firstOperand;
 
-num.forEach((num) => {
+numButtons.forEach((num) => {
     num.addEventListener("click", (e) => {
-        displayNum = display.textContent += e.target.textContent;
-        console.log(displayNum);
+        currInput = displayElement.textContent += e.target.textContent;
+        console.log(currInput);
     });
 });
 
-operator.forEach((operator) => {
+operatorButtons.forEach((operator) => {
     operator.addEventListener("click", (e) => {
-        sign = e.target.textContent;
-        console.log(sign);
+        currOperator = e.target.textContent;
+        console.log(currOperator);
 
-        if (!numOne) {
-            numOne = Number(displayNum);
+        if (!firstOperand) {
+            firstOperand = Number(currInput);
         } 
 
-        display.textContent = "";
-        displayNum = 0;
+        displayElement.textContent = "";
+        currInput = 0;
     });
 });
 
-clear.addEventListener("click", () => {
+clearButton.addEventListener("click", () => {
     reset();
 });
 
@@ -63,14 +63,18 @@ function div (num1, num2) {
 }
 
 function reset () {
-    display.innerHTML = "";
-    numOne = undefined;
+    displayElement.innerHTML = "";
+    firstOperand = 0;
+    console.log(`RESET: ${firstOperand}`);
 }
 
 
-enter.addEventListener("click", () => {
-    const results = Number(operate(Number(numOne), Number(displayNum), sign))
-    display.textContent = results;
+enterButton.addEventListener("click", () => {
+    if (!firstOperand) {
+        console.log("NO PREV VALUE");
+    }
+    const results = Number(operate(Number(firstOperand), Number(currInput), currOperator))
+    displayElement.textContent = results;
     console.log(results);
-    numOne = results;
+    firstOperand = results;
 })
