@@ -6,26 +6,42 @@ let displayElement = document.querySelector(".display");
 
 let currInput = "";
 let currOperator = "";
-let firstOperand;
+let firstOperand = null;
 
 numButtons.forEach((num) => {
     num.addEventListener("click", (e) => {
-        currInput = displayElement.textContent += e.target.textContent;
+        currInput += e.target.textContent;
+        displayElement.textContent = currInput;
         console.log(currInput);
     });
 });
 
 operatorButtons.forEach((operator) => {
     operator.addEventListener("click", (e) => {
-        currOperator = e.target.textContent;
-        console.log(currOperator);
 
-        if (!firstOperand) {
+        if (firstOperand !== null && currOperator && currInput !== "") {
+            firstOperand = operate(firstOperand, Number(currInput), currOperator);
+            displayElement.textContent = firstOperand;
+            console.log(`spec: ${firstOperand}`);
+        } else if (currInput !== "") {
+            // First operator press: just capture the first operand
             firstOperand = Number(currInput);
-        } 
+        }
+        console.log(`prev: ${currOperator}`);
+        currOperator = e.target.textContent;
+        console.log(`curr: ${currOperator}`);
+        currInput = ""; // ready for the next number
+        
+        
+        // currOperator = e.target.textContent;
+        // console.log(currOperator);
 
-        displayElement.textContent = "";
-        currInput = 0;
+        // if (!firstOperand) {
+        //     firstOperand = Number(currInput);
+        // } 
+
+        // displayElement.textContent = "";
+        // currInput = 0;
     });
 });
 
@@ -63,18 +79,24 @@ function div (num1, num2) {
 }
 
 function reset () {
-    displayElement.innerHTML = "";
-    firstOperand = 0;
+    displayElement.textContent = "";
+    currInput = "";
+    currOperator = "";
+    firstOperand = null;
     console.log(`RESET: ${firstOperand}`);
 }
 
 
 enterButton.addEventListener("click", () => {
-    if (!firstOperand) {
-        console.log("NO PREV VALUE");
+    if (firstOperand === null && currInput === "" && currOperator === "") {
+        console.log("Nothing to Calculate");
+        return;
     }
     const results = Number(operate(Number(firstOperand), Number(currInput), currOperator))
     displayElement.textContent = results;
-    console.log(results);
     firstOperand = results;
+    currInput = "";
+    currOperator = "";
+
+    console.log(results);
 })
