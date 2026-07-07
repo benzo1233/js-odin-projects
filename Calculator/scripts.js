@@ -12,74 +12,22 @@ numButtons.forEach((num) => {
     num.addEventListener("click", (e) => {
         currInput += e.target.textContent;
         displayElement.textContent = currInput;
-
-        console.log(currInput);
     });
 });
 
 operatorButtons.forEach((operator) => {
     operator.addEventListener("click", (e) => {
-        const tmp = e.target.textContent;
-        console.log(currOperator);
-
         if (firstOperand && currOperator && currInput) {
             firstOperand = operate(firstOperand, Number(currInput), currOperator);
             displayElement.textContent = firstOperand;
-            console.log(`spec: ${firstOperand}`);
         } else if (currInput !== "") {
             firstOperand = Number(currInput);
         }
 
-        currOperator = tmp;
-        console.log(currOperator);
-
-        //prep for next num
+        currOperator = e.target.textContent;
         currInput = "";
     });
 });
-
-clearButton.addEventListener("click", () => {
-    reset();
-});
-
-
-function operate (num1, num2, operator) {
-    const op = 
-        operator === "+" ? add(num1,num2) :
-        operator === "-" ? sub(num1,num2) :
-        operator === "*" ? multi(num1,num2) :
-        operator === "/" ? div(num1,num2) : 
-        "ERR";
-
-    return Number(op);
-}
-
-
-function add (num1, num2) {
-    return num1 + num2;
-}
-
-function sub (num1, num2) {
-    return num1 - num2;
-}
-
-function multi (num1, num2) {
-    return num1 * num2;
-}
-
-function div (num1, num2) {
-    return num1 / num2;
-}
-
-function reset () {
-    displayElement.textContent = "";
-    currInput = ""; //same as above
-    firstOperand = null;
-    currOperator = "";
-
-    console.log(`RESET: ${firstOperand}`);
-}
-
 
 enterButton.addEventListener("click", () => {
     if (!firstOperand && currOperator === "" && currInput === "") {
@@ -87,11 +35,54 @@ enterButton.addEventListener("click", () => {
         return;
     }
 
-    const results = Number(operate(Number(firstOperand), Number(currInput), currOperator))
-    displayElement.textContent = results;
-    firstOperand = results;
+    firstOperand = displayElement.textContent = Number(
+        operate(Number(firstOperand), Number(currInput), currOperator),
+    );
+
     currInput = "";
     currOperator = "";
+});
 
-    console.log(results);
-})
+clearButton.addEventListener("click", () => {
+    reset();
+});
+
+function operate(num1, num2, operator) {
+    const op =
+        operator === "+"
+            ? add(num1, num2)
+            : operator === "-"
+                ? sub(num1, num2)
+                : operator === "*"
+                    ? multi(num1, num2)
+                    : operator === "/"
+                        ? div(num1, num2)
+                        : "ERR";
+
+    return Number(op);
+};
+
+function add(num1, num2) {
+    return num1 + num2;
+};
+
+function sub(num1, num2) {
+    return num1 - num2;
+};
+
+function multi(num1, num2) {
+    return num1 * num2;
+};
+
+function div(num1, num2) {
+    return num1 / num2;
+};
+
+function reset() {
+    displayElement.textContent = "";
+    currInput = "";
+    firstOperand = null;
+    currOperator = "";
+
+    console.log(`RESET: ${firstOperand}`);
+};
