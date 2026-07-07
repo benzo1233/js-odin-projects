@@ -12,36 +12,29 @@ numButtons.forEach((num) => {
     num.addEventListener("click", (e) => {
         currInput += e.target.textContent;
         displayElement.textContent = currInput;
+
         console.log(currInput);
     });
 });
 
 operatorButtons.forEach((operator) => {
     operator.addEventListener("click", (e) => {
+        const tmp = e.target.textContent;
+        console.log(currOperator);
 
-        if (firstOperand !== null && currOperator && currInput !== "") {
+        if (firstOperand && currOperator && currInput) {
             firstOperand = operate(firstOperand, Number(currInput), currOperator);
             displayElement.textContent = firstOperand;
             console.log(`spec: ${firstOperand}`);
         } else if (currInput !== "") {
-            // First operator press: just capture the first operand
             firstOperand = Number(currInput);
         }
-        console.log(`prev: ${currOperator}`);
-        currOperator = e.target.textContent;
-        console.log(`curr: ${currOperator}`);
-        currInput = ""; // ready for the next number
-        
-        
-        // currOperator = e.target.textContent;
-        // console.log(currOperator);
 
-        // if (!firstOperand) {
-        //     firstOperand = Number(currInput);
-        // } 
+        currOperator = tmp;
+        console.log(currOperator);
 
-        // displayElement.textContent = "";
-        // currInput = 0;
+        //prep for next num
+        currInput = "";
     });
 });
 
@@ -80,18 +73,20 @@ function div (num1, num2) {
 
 function reset () {
     displayElement.textContent = "";
-    currInput = "";
-    currOperator = "";
+    currInput = ""; //same as above
     firstOperand = null;
+    currOperator = "";
+
     console.log(`RESET: ${firstOperand}`);
 }
 
 
 enterButton.addEventListener("click", () => {
-    if (firstOperand === null && currInput === "" && currOperator === "") {
-        console.log("Nothing to Calculate");
+    if (!firstOperand && currOperator === "" && currInput === "") {
+        console.log("INVALID FIELDS");
         return;
     }
+
     const results = Number(operate(Number(firstOperand), Number(currInput), currOperator))
     displayElement.textContent = results;
     firstOperand = results;
