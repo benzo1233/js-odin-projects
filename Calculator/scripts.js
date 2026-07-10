@@ -1,58 +1,19 @@
-// const numButtons = document.querySelectorAll(".num");
-// const operatorButtons = document.querySelectorAll(".operator");
-// const clearButton = document.querySelector(".clear");
-// const enterButton = document.querySelector(".equal");
-
-//new
 const buttons = document.querySelector(".calculator");
-
 let displayElement = document.querySelector(".display");
 
 let currInput = "";
 let currOperator = "";
 let firstOperand = null;
 
-// numButtons.forEach((num) => {
-//     num.addEventListener("click", (e) => {
-//         numHandler(e);
-//     });
-// });
-
-// operatorButtons.forEach((button) => {
-//     button.addEventListener("click", (e) => {
-//         operatorHandler(e);
-//     });
-// });
-
-// enterButton.addEventListener("click", () => {
-//     enterHandler();
-// });
-
-// clearButton.addEventListener("click", () => {
-//     reset();
-// });
-
-
 buttons.addEventListener("click", (e) => {
     const buttonContent = e.target.classList;
-    if (buttonContent.contains("num")) {
-        numHandler(e);
-    }
-
-    if (buttonContent.contains("operator")) {
-        operatorHandler(e);
-    }
-
-    if (buttonContent.contains("equal")) {
-        enterHandler();
-    }
-
-    if (buttonContent.contains("clear")) {
-        reset();
-    }
+    if (buttonContent.contains("num")) numHandler(e);
+    if (buttonContent.contains("operator")) operatorHandler(e);
+    if (buttonContent.contains("equal")) enterHandler();
+    if (buttonContent.contains("clear")) reset();
 });
 
-function operatorHandler (e) {
+function operatorHandler(e) {
     if (e.target.textContent === "SQRT" && (firstOperand || currInput)) {
         const val = currInput !== "" ? Number(currInput) : firstOperand;
         firstOperand = operate(null, val, "SQRT");
@@ -70,12 +31,12 @@ function operatorHandler (e) {
     currInput = "";
 }
 
-function numHandler (e) {
+function numHandler(e) {
     currInput += e.target.textContent;
     displayElement.textContent = currInput;
 }
 
-function enterHandler (e) {
+function enterHandler(e) {
     if (!firstOperand && currOperator === "" && currInput === "") {
         displayElement.textContent = ("put something vro");
         return;
