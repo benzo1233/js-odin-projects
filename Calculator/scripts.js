@@ -6,15 +6,15 @@ let currOperator = "";
 let firstOperand = null;
 
 buttons.addEventListener("click", (e) => {
-    const buttonContent = e.target.classList;
-    if (buttonContent.contains("num")) numHandler(e);
-    if (buttonContent.contains("operator")) operatorHandler(e);
-    if (buttonContent.contains("equal")) enterHandler();
-    if (buttonContent.contains("clear")) reset();
+    const buttonContent = e.target;
+    if (buttonContent.classList.contains("num")) numHandler(buttonContent.textContent);
+    if (buttonContent.classList.contains("operator")) operatorHandler(buttonContent.textContent);
+    if (buttonContent.classList.contains("equal")) enterHandler();
+    if (buttonContent.classList.contains("clear")) reset();
 });
 
-function operatorHandler(e) {
-    if (e.target.textContent === "SQRT" && (firstOperand || currInput)) {
+function operatorHandler(value) {
+    if (value === "SQRT" && (firstOperand || currInput)) {
         const val = currInput !== "" ? Number(currInput) : firstOperand;
         firstOperand = operate(null, val, "SQRT");
         displayElement.textContent = firstOperand;
@@ -27,12 +27,12 @@ function operatorHandler(e) {
         firstOperand = Number(currInput);
     }
 
-    currOperator = e.target.textContent;
     currInput = "";
+    currOperator = value;
 }
 
-function numHandler(e) {
-    currInput += e.target.textContent;
+function numHandler(value) {
+    currInput += value;
     displayElement.textContent = currInput;
 }
 
