@@ -1,9 +1,11 @@
 const buttons = document.querySelector(".calculator");
 let displayElement = document.querySelector(".display");
 
-let currInput = "";
-let currOperator = "";
-let firstOperand = null;
+let calc = {
+    currInput : "",
+    currOperand : "",
+    firstOperand : null,
+}
 
 buttons.addEventListener("click", (e) => {
     const buttonContent = e.target;
@@ -14,40 +16,40 @@ buttons.addEventListener("click", (e) => {
 });
 
 function operatorHandler(value) {
-    if (value === "SQRT" && (firstOperand || currInput)) {
-        const val = currInput !== "" ? Number(currInput) : firstOperand;
-        firstOperand = operate(null, val, "SQRT");
-        updateDisplay(firstOperand);
-        currInput = "";
+    if (value === "SQRT" && (calc.firstOperand || calc.calc.currInput)) {
+        const val = calc.currInput !== "" ? Number(calc.currInput) : calc.firstOperand;
+        calc.firstOperand = operate(null, val, "SQRT");
+        updateDisplay(calc.firstOperand);
+        calc.currInput = "";
         return;
-    } else if (firstOperand && currOperator && currInput) {
-        firstOperand = operate(firstOperand, Number(currInput), currOperator);
-        updateDisplay(firstOperand);
-    } else if (currInput !== "") {
-        firstOperand = Number(currInput);
+    } else if (calc.firstOperand && calc.currOperand && calc.currInput) {
+        calc.firstOperand = operate(calc.firstOperand, Number(calc.currInput), calc.currOperand);
+        updateDisplay(calc.firstOperand);
+    } else if (calc.currInput !== "") {
+        calc.firstOperand = Number(calc.currInput);
     }
 
-    currInput = "";
-    currOperator = value;
+    calc.currInput = "";
+    calc.currOperand = value;
 }
 
 function numHandler(value) {
-    currInput += value;
-    updateDisplay(currInput);
+    calc.currInput += value;
+    updateDisplay(calc.currInput);
 }
 
 function enterHandler(e) {
-    if (!firstOperand && currOperator === "" && currInput === "") {
+    if (!calc.firstOperand && calc.currOperand === "" && calc.currInput === "") {
         updateDisplay("Put something vro");
         return;
     }
 
-    firstOperand = updateDisplay(
-        operate(Number(firstOperand), Number(currInput), currOperator)
+    calc.firstOperand = updateDisplay(
+        operate(Number(calc.firstOperand), Number(calc.currInput), calc.currOperand)
     );
 
-    currInput = "";
-    currOperator = "";
+    calc.currInput = "";
+    calc.currOperand = "";
 }
 
 function updateDisplay (value) {
@@ -87,7 +89,7 @@ function sqrt(num2) { return Math.sqrt(num2); };
 
 function reset() {
     updateDisplay("");
-    currInput = "";
-    firstOperand = null;
-    currOperator = "";
+    calc.currInput = "";
+    calc.firstOperand = null;
+    calc.currOperand = "";
 };
