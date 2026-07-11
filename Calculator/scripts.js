@@ -17,12 +17,12 @@ function operatorHandler(value) {
     if (value === "SQRT" && (firstOperand || currInput)) {
         const val = currInput !== "" ? Number(currInput) : firstOperand;
         firstOperand = operate(null, val, "SQRT");
-        displayElement.textContent = firstOperand;
+        updateDisplay(firstOperand);
         currInput = "";
         return;
     } else if (firstOperand && currOperator && currInput) {
         firstOperand = operate(firstOperand, Number(currInput), currOperator);
-        displayElement.textContent = firstOperand;
+        updateDisplay(firstOperand);
     } else if (currInput !== "") {
         firstOperand = Number(currInput);
     }
@@ -33,21 +33,25 @@ function operatorHandler(value) {
 
 function numHandler(value) {
     currInput += value;
-    displayElement.textContent = currInput;
+    updateDisplay(currInput);
 }
 
 function enterHandler(e) {
     if (!firstOperand && currOperator === "" && currInput === "") {
-        displayElement.textContent = ("put something vro");
+        updateDisplay("Put something vro");
         return;
     }
 
-    firstOperand = displayElement.textContent = Number(
-        operate(Number(firstOperand), Number(currInput), currOperator),
+    firstOperand = updateDisplay(
+        operate(Number(firstOperand), Number(currInput), currOperator)
     );
 
     currInput = "";
     currOperator = "";
+}
+
+function updateDisplay (value) {
+    displayElement.textContent = value;
 }
 
 function operate(num1, num2, operator) {
@@ -82,7 +86,7 @@ function modulo(num1, num2) { return num1 % num2; };
 function sqrt(num2) { return Math.sqrt(num2); };
 
 function reset() {
-    displayElement.textContent = "";
+    updateDisplay("");
     currInput = "";
     firstOperand = null;
     currOperator = "";
