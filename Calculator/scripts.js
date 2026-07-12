@@ -41,7 +41,7 @@ function numHandler(value) {
     updateDisplay(calc.currOperand);
 }
 
-function enterHandler(e) {
+function enterHandler() {
     if (!calc.prevOperand && calc.operator === "" && calc.currOperand === "") {
         updateDisplay("Put something vro");
         return;
