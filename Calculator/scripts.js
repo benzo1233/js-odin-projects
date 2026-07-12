@@ -1,55 +1,58 @@
+//TODO: Separate Logic/Math (Modal) and UI/Rendering (Controller);
+// Makes Code easily tested, changed, & maintained.
+
 const buttons = document.querySelector(".calculator");
 let displayElement = document.querySelector(".display");
 
 let calc = {
-    currInput : "",
     currOperand : "",
-    firstOperand : null,
+    prevOperand : null,
+    operator : "",
 }
 
 buttons.addEventListener("click", (e) => {
     const buttonContent = e.target;
     if (buttonContent.classList.contains("num")) numHandler(buttonContent.textContent);
-    if (buttonContent.classList.contains("operator")) operatorHandler(buttonContent.textContent);
-    if (buttonContent.classList.contains("equal")) enterHandler();
-    if (buttonContent.classList.contains("clear")) reset();
+    else if (buttonContent.classList.contains("operator")) operatorHandler(buttonContent.textContent);
+    else if (buttonContent.classList.contains("equal")) enterHandler();
+    else if (buttonContent.classList.contains("clear")) reset();
 });
 
 function operatorHandler(value) {
-    if (value === "SQRT" && (calc.firstOperand || calc.calc.currInput)) {
-        const val = calc.currInput !== "" ? Number(calc.currInput) : calc.firstOperand;
-        calc.firstOperand = operate(null, val, "SQRT");
-        updateDisplay(calc.firstOperand);
-        calc.currInput = "";
+    if (value === "SQRT" && (calc.prevOperand || calc.calc.currOperand)) {
+        const val = calc.currOperand !== "" ? Number(calc.currOperand) : calc.prevOperand;
+        calc.prevOperand = operate(null, val, "SQRT");
+        updateDisplay(calc.prevOperand);
+        calc.currOperand = "";
         return;
-    } else if (calc.firstOperand && calc.currOperand && calc.currInput) {
-        calc.firstOperand = operate(calc.firstOperand, Number(calc.currInput), calc.currOperand);
-        updateDisplay(calc.firstOperand);
-    } else if (calc.currInput !== "") {
-        calc.firstOperand = Number(calc.currInput);
+    } else if (calc.prevOperand && calc.operator && calc.currOperand) {
+        calc.prevOperand = operate(calc.prevOperand, Number(calc.currOperand), calc.operator);
+        updateDisplay(calc.prevOperand);
+    } else if (calc.currOperand !== "") {
+        calc.prevOperand = Number(calc.currOperand);
     }
 
-    calc.currInput = "";
-    calc.currOperand = value;
+    calc.currOperand = "";
+    calc.operator = value;
 }
 
 function numHandler(value) {
-    calc.currInput += value;
-    updateDisplay(calc.currInput);
+    calc.currOperand += value;
+    updateDisplay(calc.currOperand);
 }
 
 function enterHandler(e) {
-    if (!calc.firstOperand && calc.currOperand === "" && calc.currInput === "") {
+    if (!calc.prevOperand && calc.operator === "" && calc.currOperand === "") {
         updateDisplay("Put something vro");
         return;
     }
 
-    calc.firstOperand = updateDisplay(
-        operate(Number(calc.firstOperand), Number(calc.currInput), calc.currOperand)
+    calc.prevOperand = updateDisplay(
+        operate(Number(calc.prevOperand), Number(calc.currOperand), calc.operator)
     );
 
-    calc.currInput = "";
     calc.currOperand = "";
+    calc.operator = "";
 }
 
 function updateDisplay (value) {
@@ -89,7 +92,7 @@ function sqrt(num2) { return Math.sqrt(num2); };
 
 function reset() {
     updateDisplay("");
-    calc.currInput = "";
-    calc.firstOperand = null;
     calc.currOperand = "";
+    calc.prevOperand = null;
+    calc.operator = "";
 };
