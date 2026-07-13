@@ -49,9 +49,9 @@ function enterHandler() {
         return;
     }
 
-    calc.prevOperand = updateDisplay(
-        operate(Number(calc.prevOperand), Number(calc.currOperand), calc.operator)
-    );
+    const res = operate(Number(calc.prevOperand), Number(calc.currOperand), calc.operator);
+    calc.prevOperand = res;
+    updateDisplay(res);
 
     calc.currOperand = "";
     calc.operator = "";
@@ -67,7 +67,17 @@ function decimalHandler() {
 }
 
 function signage () {
-
+    if (calc.currOperand !== "") {
+        let num = Number(calc.currOperand);
+        num *= -1;
+        calc.currOperand = String(num);
+        updateDisplay(calc.currOperand);
+    } else if (calc.prevOperand !== "") {
+        let num = Number(calc.prevOperand);
+        num *= -1;
+        calc.prevOperand = String(num);
+        updateDisplay(calc.prevOperand);
+    }
 }
 
 function updateDisplay (value) {
