@@ -16,10 +16,12 @@ buttons.addEventListener("click", (e) => {
     else if (buttonContent.classList.contains("operator")) operatorHandler(buttonContent.textContent);
     else if (buttonContent.classList.contains("equal")) enterHandler();
     else if (buttonContent.classList.contains("clear")) reset();
+    else if (buttonContent.classList.contains("decimal")) decimalHandler();
+    else if (buttonContent.classList.contains("signage")) signage();
 });
 
 function operatorHandler(value) {
-    if (value === "SQRT" && (calc.prevOperand || calc.calc.currOperand)) {
+    if (value === "SQRT" && (calc.prevOperand || calc.currOperand)) {
         const val = calc.currOperand !== "" ? Number(calc.currOperand) : calc.prevOperand;
         calc.prevOperand = operate(null, val, "SQRT");
         updateDisplay(calc.prevOperand);
@@ -53,6 +55,19 @@ function enterHandler() {
 
     calc.currOperand = "";
     calc.operator = "";
+}
+
+function decimalHandler() {
+    if (calc.currOperand.includes(".")) {
+        return; 
+    } else {
+        calc.currOperand += ".";
+        updateDisplay(calc.currOperand);
+    }
+}
+
+function signage () {
+
 }
 
 function updateDisplay (value) {
