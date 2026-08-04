@@ -18,9 +18,3 @@
     background-color: yellow;
     margin-bottom: 10px;;
 }
-
-table > tbody > tr > td {
-    align-items: center;
-    border-style: solid;
-    background-color: yellow;
-}
