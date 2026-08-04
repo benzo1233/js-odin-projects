@@ -92,10 +92,12 @@ function signage() {
 }
 
 function updateDisplay(value) {
-    displayElement.textContent = value;
+    const num = parseFloat(value);
+    displayElement.textContent = parseFloat(num.toFixed(3));
 }
 
 function operate(num1, num2, operator) {
+    let res = 0;
     switch (operator) {
         case "+":
             return num1 + num2;
