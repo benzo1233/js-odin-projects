@@ -93,11 +93,10 @@ function signage() {
 
 function updateDisplay(value) {
     const num = parseFloat(value);
-    displayElement.textContent = parseFloat(num.toFixed(3));
+    displayElement.textContent = isNaN(num) ? value : parseFloat(num.toFixed(5));
 }
 
 function operate(num1, num2, operator) {
-    let res = 0;
     switch (operator) {
         case "+":
             return num1 + num2;
@@ -106,7 +105,7 @@ function operate(num1, num2, operator) {
         case "*":
             return num1 * num2;
         case "/":
-            return num1 / num2;
+            return num2 === 0 ? "bruh no zeros" : num1 / num2;
         case "%":
             return num1 % num2;
         case "SQRT":
@@ -117,7 +116,7 @@ function operate(num1, num2, operator) {
 }
 
 function reset() {
-    updateDisplay("");
+    updateDisplay("0");
     calc.currOperand = "";
     calc.prevOperand = null;
     calc.operator = "";
