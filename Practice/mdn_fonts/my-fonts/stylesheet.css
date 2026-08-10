@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Archistico';
+    src: url('Archistico-Normal.woff2') format('woff2'),
+        url('Archistico-Normal.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Archistico';
+    src: url('Archistico-Bold.woff2') format('woff2'),
+        url('Archistico-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sedgwick Ave';
+    src: url('SedgwickAve-Regular.woff2') format('woff2'),
+        url('SedgwickAve-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sedgwick Ave Display';
+    src: url('SedgwickAveDisplay-Regular.woff2') format('woff2'),
+        url('SedgwickAveDisplay-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
