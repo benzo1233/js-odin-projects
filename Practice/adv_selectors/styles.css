@@ -1,0 +1,108 @@
+* {
+    /* Make sure to comment out margin/padding for exercise 4 */
+    /* margin: 0;
+    padding: 0; */
+    box-sizing: border-box;
+}
+
+html {
+    line-height: 1.5;
+}
+
+body {
+  font: 1.2em / 1.5 sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  width: 300px;
+}
+
+td,
+th {
+  padding: 0.2em;
+  text-align: left;
+}
+
+/* Add styles here for third exercise */
+
+/* a {
+    color: orange;
+}
+
+a:hover {
+    text-decoration: none;
+}
+a:visited {
+    color: green;
+}
+
+.container p:first-child {
+    font-size: 150%;
+}
+
+.container p:first-child::first-line {
+    color: red;
+}
+
+table tr:nth-child(even) {
+    background-color: #333333;
+    color: white; 
+    
+}*/
+
+/* Exercise 4 */
+/* 
+body {
+  font: 1.2em / 1.5 sans-serif;
+}
+
+h2 + p {
+    color: red;
+}
+
+ul.list > li{
+    list-style: none;
+    border-bottom: 1px solid grey;
+} */
+
+/* Exercise 5 */
+
+body {
+  font: 1.2em / 1.5 sans-serif;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+a {
+  display: block;
+  padding: 0.5em;
+}
+
+a {
+  border: 5px solid grey;
+}
+
+/* Add styles here */
+
+a[title] {
+    border-color: pink;
+}
+
+a[href*="contact"] {
+    border-color: orange;
+}
+
+a[href^="https"] {
+    border-color: green;
+}
+
+
