@@ -69,6 +69,7 @@ ul.list > li{
 /* Exercise 5 */
 
 body {
+  background: repeating-linear-gradient(125deg, blue, red);
   font: 1.2em / 1.5 sans-serif;
 }
 
@@ -76,6 +77,8 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  background-color: wheat;
+
 }
 
 li {
@@ -104,5 +107,8 @@ a[href*="contact"] {
 a[href^="https"] {
     border-color: green;
 }
+
+
+
 
 

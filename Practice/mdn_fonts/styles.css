@@ -49,4 +49,6 @@ p {
     line-height: 1.6;
     word-spacing: 0.6rem;
     font-family: "Bitcount Prop Single";
+    width: clamp(45ch, 50%, 75ch);
+
 }
