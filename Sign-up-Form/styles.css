@@ -1,0 +1,261 @@
+@import url(fonts/transfonter.org-20260825-221037/stylesheet.css);
+
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+*:not(dialog) {
+    margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    /* 4. Increase line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+    isolation: isolate;
+}
+
+
+/* ===== My Styling ===== */
+
+.wrapper {
+    height: 100vh;
+    /* background-color: yellow; */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* ===== HEADER/HERO ===== */
+
+.hero {
+    background-image: url(imgs/halie-west-25xggax4bSA-unsplash.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    height: 25vh;
+
+    display: grid;
+    /*formerly flex*/
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Norse";
+    color: white;
+    overflow: hidden;
+}
+
+.hero-area {
+    background-color: rgba(28, 27, 27, 0.7);
+    display: inline-flex;
+    align-items: center;
+    padding: 5px;
+    font-size: 4vh;
+}
+
+img {
+    padding-right: 0.5rem;
+    width: auto;
+    height: 15vw;
+}
+
+.hero-des {
+    font-weight: bold;
+    padding: 1rem;
+    background-color: rgba(51, 50, 50, 0.07);
+    font-size: clamp(0.8rem, calc(0.8rem + 1vh), 3rem);
+
+    padding-left: 2vw;
+
+}
+
+.hero-des p {
+    line-height: 1.2;
+    padding-bottom: 10px;
+}
+
+/* ===== FORM ===== */
+
+form {
+    display: grid;
+    width: 100%;
+    padding: 1rem;
+
+    padding-left: 2vw;
+}
+
+form div {
+    padding-bottom: 1rem;
+}
+
+input {
+    width: 100%;
+    font-size: 0.8rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 5px;
+}
+
+/* ??? */
+label {
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+input[type="password"]:invalid {
+    border: 2px solid red;
+    border-radius: 5px;
+}
+
+.Nike {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding-bottom: 0.8rem;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    background-color: #bfc1c640;
+    box-shadow: inset 2px 2px 4px rgba(186, 184, 184, 0.402);
+}
+
+.btn {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: #596D48;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    margin-bottom: 1rem;
+}
+
+/* ===== Desktop View ===== */
+
+
+@media screen and (min-width: 760px) {
+    header {
+        width: 40%;
+    }
+
+    .hero {
+        height: 100%;
+        align-items: start;
+        padding-top: 30%;
+    }
+
+    .hero-des {
+        padding-top: 10vh;
+        padding-left: 2vw;
+    }
+
+    .hero-des,
+    main,
+    footer {
+        flex: 1;
+    }
+
+    .wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+
+    form {
+        display: grid;
+        gap: 0rem 2rem;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .Nike {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
+
+    .btn {
+        width: min(100%, 300px);
+        padding: 0.75rem 1rem;
+        border-radius: 5px;
+    }
+
+    footer {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        padding: 2rem 0 0 2vw;
+    }
+}
