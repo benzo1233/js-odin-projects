@@ -165,7 +165,7 @@ label {
     font-size: 0.8rem;
 }
 
-input[type="password"]:invalid {
+input[type="password"]:user-invalid {
     border: 2px solid red;
     border-radius: 5px;
 }
