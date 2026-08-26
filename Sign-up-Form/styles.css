@@ -176,6 +176,8 @@ input[type="password"]:user-invalid {
     padding-bottom: 0.8rem;
 }
 
+/*  Footer and Submit Buttons */
+
 footer {
     display: flex;
     flex-direction: column;
