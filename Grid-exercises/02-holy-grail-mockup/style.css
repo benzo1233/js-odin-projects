@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+.container div {
+  padding: 15px;
+  font-size: 32px;
+  font-family: Helvetica;
+  font-weight: bold;
+  color: white;
+}
+
+.header {
+  background-color: #393f4d;
+}
+
+.nav ul,
+.menu ul {
+  font-size: 16px;
+  list-style-type: none;
+}
+
+.sidebar {
+  background-color: #C50208;
+}
+
+.sidebar .photo {
+  background-color: white;
+  color: black;
+  font-size: 12px;
+  font-weight: normal;
+  border-radius: 10px;
+}
+
+
+.sidebar .side-content {
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.nav {
+  background-color: #C50208;
+}
+
+.nav ul li {
+  text-transform: uppercase;
+}
+
+.article {
+  background-color: #bccbde;
+}
+
+.article p {
+  font-size: 18px;
+  font-family: sans-serif;
+  color: white;
+  text-align: left;
+}
+
+.article .card {
+  background-color: #FFFFFF;
+  color: black;
+  text-align: center;
+}
+
+.card p {
+  color: black;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.card .title {
+  font-size: 18px;
+  text-align: center;
+}
+
+.footer {
+  background-color: #393f4d;
+}
+
+.footer p {
+  font-size: 13px;
+  font-weight: normal;
+}
+
+/* My Styles */
+
+.container {
+  /* height: 100vh; */
+  display: grid;
+  grid-template-rows: 10% 5% auto 5%;
+  /* grid-template-columns: 20% 80%; My Old Solution, this can cause overflow if gap is added, best to use 1fr b/c it divids content after gap is added*/
+  grid-template-columns: 1fr 4fr;
+  gap: 5px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /*changed to fr from %*/
+  grid-column: 1 / -1;
+  align-items: center;
+}
+
+.logo {
+  text-align: left;
+}
+
+/* .menu { 
+  align-self: center;
+} */
+
+.menu ul {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.sidebar {
+  display: grid;
+  grid-row: 2 / 4;
+  gap: 3rem;
+}
+
+.side-content,
+.photo {
+  display: grid;
+  align-items: center;
+}
+
+.nav {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.nav ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.article {
+  display: grid;
+  /* grid-template-columns: repeat(4, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.article .card {
+  height: 200px;
+}
+
+.footer {
+  grid-column: 1 / -1;
+}
