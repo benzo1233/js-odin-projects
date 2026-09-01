@@ -93,30 +93,20 @@
 /* My Styles */
 
 .container {
-  /* height: 100vh; */
   display: grid;
-  grid-template-rows: 10% 5% auto 5%;
-  /* grid-template-columns: 20% 80%; My Old Solution, this can cause overflow if gap is added, best to use 1fr b/c it divids content after gap is added*/
-  grid-template-columns: 1fr 4fr;
-  gap: 5px;
+  grid-template: auto / 1fr 4fr;
+  gap: 4px;
 }
 
 .header {
-  display: grid;
-  grid-template-columns: 1fr 2fr; /*changed to fr from %*/
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: start;
   align-items: center;
 }
 
-.logo {
-  text-align: left;
-}
-
-/* .menu { 
-  align-self: center;
-} */
-
-.menu ul {
+.menu ul{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -124,18 +114,12 @@
 .sidebar {
   display: grid;
   grid-row: 2 / 4;
-  gap: 3rem;
+  gap: 50px;
 }
 
-.side-content,
-.photo {
+.side-content, .photo  {
   display: grid;
   align-items: center;
-}
-
-.nav {
-  grid-row: 2;
-  grid-column: 2;
 }
 
 .nav ul {
@@ -145,12 +129,11 @@
 
 .article {
   display: grid;
-  /* grid-template-columns: repeat(4, 1fr); */
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 15px;
 }
 
-.article .card {
+.article > .card {
   height: 200px;
 }
 
