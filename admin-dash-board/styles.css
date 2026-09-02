@@ -213,7 +213,7 @@ img[src^="icons"] {
     border-radius: var(--border-radius);
     border: var(--grid-border-color);
     box-shadow: var(--card-box-shadow);
-    border-left: 5px solid #FBB200;
+    border-left: 5px solid var(--secondary-color);
 }
 
 .btn-section {
