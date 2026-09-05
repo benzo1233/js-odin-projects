@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+
+<body>
+    <button id="open-dialog">Open-Dialog</button>
+    <dialog id="book-dialog">
+        <form action="#" method="post">
+            <p>
+                <label for="book">Add Book Name: </label>
+                <input type="text" id="book" name="book" placeholder="The Wizard of Oz">
+            </p>
+
+            <p>
+                <label for="author">Add Author Name: </label>
+                <input type="text" id="author" name="author" placeholder="Steven King">
+            </p>
+            <button type="submit">Add Book</button>
+            <button type="button" id="close-dialog">Cancel</button>
+
+        </form>
+    </dialog>
+
+    <div id="display">
+        <h1>BOOKS: </h1>
+    </div>
+</body>
+
+</html>

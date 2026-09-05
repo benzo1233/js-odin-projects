@@ -72,3 +72,8 @@ form > button {
     border: solid 1px black;
     margin-bottom: 1rem;
 }
+
+.book-card button {
+  background-color: red;
+  width: 200px;
+}
