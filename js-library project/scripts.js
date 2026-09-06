@@ -8,7 +8,7 @@ function Book(id, name, author) {
 }
 
 Book.prototype.readStatus = function () {
-    this.read = true;
+    this.read = !this.read;
 }
 
 function addBookToLibrary(name, author) {
@@ -60,7 +60,7 @@ function displayAll() {
 const form = document.querySelector("form");
 
 form.addEventListener("submit", (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     
     const formData = new FormData(form);
     const name = formData.get("book");
