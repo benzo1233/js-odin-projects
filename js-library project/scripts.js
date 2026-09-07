@@ -1,4 +1,8 @@
+// TODO:
+// Rebuilding the whole DOM on every change is wasteful. displayAll() wipes and rebuilds every card even when only one book changed.
+
 let library = [];
+let display = document.querySelector("#display");
 
 function Book(id, name, author) {
     this.id = id;
@@ -13,47 +17,70 @@ Book.prototype.readStatus = function () {
 
 function addBookToLibrary(name, author) {
     const id = crypto.randomUUID();
-    const book = new Book(id, name, author);
-    library.push(book);
+    library.push(new Book(id, name, author));
 }
 
-let display = document.querySelector("#display");
+function createBookCard(book) {
+    const card = document.createElement("div");
+    card.classList.add("book-card");
+    card.dataset.id = book.id;
+
+    const name = document.createElement("p");
+    name.textContent = `Name: ${book.name}`;
+
+    const author = document.createElement("p");
+    author.textContent = `Author: ${book.author}`;
+
+    const id = document.createElement("p");
+    id.textContent = `ID: ${book.id}`;
+
+    const read = document.createElement("p");
+    read.textContent = `read status: ${book.read}`;
+
+    const readBtn = document.createElement("button");
+    readBtn.textContent = "Toggle Read";
+    readBtn.dataset.id = "read-btn";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.dataset.id = "delete-btn";
+    deleteBtn.textContent = "Delete";
+
+    card.append(name, author, id, read, deleteBtn, readBtn);
+    return card;
+}
+
+const dialog = document.querySelector("#book-dialog");
+const body = document.querySelector("body");
+
+body.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.id === "open-dialog") {
+        dialog.showModal();
+    }
+    if (target.id === "close-dialog") {
+        dialog.close();
+    }
+
+    const card = target.closest(".book-card"); /*looks towards ancestors for .book-card*/
+    const book = library.find(b => b.id === card.dataset.id); /*returns refernece to our object */
+
+    // Future implement target.dataset.action?
+    if (target.textContent === "Toggle Read") {
+        book.readStatus();
+        displayAll();
+    }
+    if (target.textContent === "Delete") {
+        library = library.filter(b => b !== book); /*keep every book except the one matching the book reference */
+        dialog.close();
+        displayAll();
+    }
+});
 
 function displayAll() {
     display.innerHTML = "";
-
     for (let i = 0; i < library.length; i++) {
-        let item = document.createElement("div");
-        item.classList.add("book-card");
-
-        let name = document.createElement("p");
-        let author = document.createElement("p");
-        let id = document.createElement("p");
-        let read = document.createElement("p");
-        let readBtn = document.createElement("button");
-        let deleteBtn = document.createElement("button");
-        const bookId = library[i].id;
-        const book = library[i];
-
-        name.textContent = `Name: ${library[i].name}`;
-        author.textContent = `Author: ${library[i].author}`;
-        id.textContent = `ID: ${library[i].id}`;
-        read.textContent = `read status: ${library[i].read}`;
-        readBtn.textContent = "Read";
-        deleteBtn.textContent = "Delete";
-
-        item.append(name, author, id, read, deleteBtn, readBtn);
-        display.append(item);
-
-        deleteBtn.addEventListener("click", ()=> {
-            library = library.filter(book => book.id !== bookId);
-            displayAll();
-        });
-
-        readBtn.addEventListener("click", ()=> {
-            book.readStatus();
-            displayAll();
-        });
+        const bookCard = createBookCard(library[i]);
+        display.append(bookCard);
     }
 }
 
@@ -61,28 +88,13 @@ const form = document.querySelector("form");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const name = formData.get("book");
-    const author = formData.get("author")
-    addBookToLibrary(name, author);    
+    const author = formData.get("author");
+
+    addBookToLibrary(name, author);
     displayAll();
-});
-
-
-const dialog = document.querySelector("#book-dialog");
-const openBtn = document.querySelector("#open-dialog");
-const closeBtn = document.querySelector("#close-dialog");
-
-openBtn.addEventListener("click", () => {
-    dialog.show();
-})
-
-closeBtn.addEventListener("click", () => {
+    form.reset();
     dialog.close();
-})
-
-// TESTING
-// addBookToLibrary("The World Wonders", "Ben");
-// addBookToLibrary("The Stranger Things", "BeHenn");
-// console.log(displayAll());
+});
