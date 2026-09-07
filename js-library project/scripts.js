@@ -3,7 +3,9 @@
 
 let library = [];
 let display = document.querySelector("#display");
-
+const dialog = document.querySelector("#book-dialog");
+const body = document.querySelector("body");
+const form = document.querySelector("form");
 function Book(id, name, author) {
     this.id = id;
     this.name = name;
@@ -49,9 +51,6 @@ function createBookCard(book) {
     return card;
 }
 
-const dialog = document.querySelector("#book-dialog");
-const body = document.querySelector("body");
-
 body.addEventListener("click", (e) => {
     const target = e.target;
     if (target.id === "open-dialog") {
@@ -84,7 +83,6 @@ function displayAll() {
     }
 }
 
-const form = document.querySelector("form");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
