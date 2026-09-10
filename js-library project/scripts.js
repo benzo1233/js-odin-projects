@@ -83,7 +83,6 @@ function displayAll() {
     }
 }
 
-
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
