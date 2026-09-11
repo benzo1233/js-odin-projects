@@ -36,9 +36,9 @@ const gameBoard = (() => {
         [[2, 0], [1, 1], [0, 2]],
     ];
 
-    function placeTic(row, col, marker) {
+    function placeTic(row, col, name) {
         if (gameOverStatus === true) {
-            // console.log("GameOVER!!")
+            console.log("Cannot Place, Game is over!!")
             return;
         }
         if (board[row][col] !== null) {
@@ -46,7 +46,7 @@ const gameBoard = (() => {
             return false;
         }
 
-        board[row][col] = marker;
+        board[row][col] = name;
         // console.log("Tic Placed!");
         // console.log(row, col);
         return true;
@@ -56,8 +56,8 @@ const gameBoard = (() => {
         for (const line of winningLines) {
             const [p1, p2, p3] = line.map(([r, c]) => board[r][c]);
             if (p1 !== null && p1 === p2 && p1 === p3) {
-                console.log(`We have a Winner: ${name}`)
                 setWin(true);
+                return true;
             }
         }
     }
@@ -86,37 +86,49 @@ function createPlayer(name, marker) {
 const body = document.getElementById("body");
 
 // View
-const view = {
-    createView() {
+const view = (() => {
+    function createView() {
         for (let i = 0; i < 3; i++) {
-            // const row = document.createElement("div");
             for (let j = 0; j < 3; j++) {
                 const button = document.createElement("button");
                 button.setAttribute("id", "tacBtn");
                 button.textContent = "-";
                 button.dataset.row = i;
                 button.dataset.col = j;
-                // row.appendChild(button);
                 button.disabled = true;
                 body.appendChild(button);
             }
         }
-    },
+    };
 
-    updateView(row, col, marker) {
+    function updateView(row, col, marker) {
         const button = document.querySelector(
             `[data-row="${row}"][data-col="${col}"]`
         );
         button.textContent = marker;
-    },
+    };
 
-    enableBtn() {
+    function enableBtn() {
         const btns = document.querySelectorAll("#tacBtn");
         for (const btn of btns) {
             btn.disabled = false;
         }
+    };
+
+    function winnerDisplay(name) {
+        const winner = document.querySelector("#winner-status");
+        winner.textContent = ` Winner: ${name}`;
     }
-};
+
+    //Initialize
+    createView();
+
+    return {
+        updateView,
+        enableBtn,
+        winnerDisplay,
+    }
+})();
 
 // Controller
 const controller = (() => {
@@ -129,9 +141,13 @@ const controller = (() => {
         const placed = gameBoard.placeTic(row, col, currentPlayer.marker);
         if (placed === true) {
             view.updateView(row, col, currentPlayer.marker);
-            gameBoard.checkWin(currentPlayer.name)
+
+            if (gameBoard.checkWin(currentPlayer.name)) {
+                view.winnerDisplay(currentPlayer.name);
+            }
             currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
+        return;
     }
 
     function getCurrentPlayer() {
@@ -156,15 +172,6 @@ body.addEventListener("click", (e) => {
     console.log(controller.getCurrentPlayer());
     controller.playGame(row, col);
 });
-
-view.createView();
-
-//Rough Draft
-
-// const text = document.querySelector("h1");
-// text.addEventListener("input", () => {
-//     console.log(text.textContent);
-// });
 
 const playerOne = document.querySelector("#player1");
 const playerTwo = document.querySelector("#player2");
