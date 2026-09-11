@@ -1,5 +1,7 @@
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -23,18 +25,31 @@ body {
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -42,23 +57,72 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
 /*
   10. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
 
-body { 
+body {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  justify-content: center;
+  min-height: 100vh;
   background-color: black;
+  color: white;
+  gap: 2rem;
+}
+
+#body {
+  display: grid;
+  background-color: white;
+  grid-template-columns: repeat(3, 1fr);
+  aspect-ratio: 1 / 1;
+  gap: 5px;
 }
 
 button {
-  width: 150px;
-  height: 150px;
-  font-size: 5rem;
+  font-size: 6rem;
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+#game-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+}
+
+#player-section {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+}
+
+#start {
+  font-size: 2rem;
+  border: solid 1px white;
+  border-radius: 20px;
+  padding: 10px 60px;
+}
+
+#start:hover {
+  background-color: rgba(255, 255, 255, 0.081);
 }
