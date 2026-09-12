@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TicTacToe</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
 </head>
+
 <body>
-    <!-- <h1>Welcome</h1> -->
-    <!-- <button>Start Button</button> -->
-     <div>
-        <h1 id="winner-status"></h1>
-     </div>
+    <div>
+        <h1 id="display"></h1>
+    </div>
     <div id="body"></div>
     <div id="game-control">
         <div id="player-section">
@@ -21,9 +21,13 @@
             <h1 id="player2" contenteditable="true"> Player 2</h1>
         </div>
     </div>
-    <button id="start">Start</button>
+    <div style="display:flex; gap:2rem;">
+        <button id="start">Start</button>
+        <button id="reset">Reset</button>
+    </div>
     <div id="result">
 
     </div>
 </body>
+
 </html>

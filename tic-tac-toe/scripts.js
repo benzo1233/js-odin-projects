@@ -1,11 +1,3 @@
-// TicTacToe
-//  1) Gameboard object for state (One Instance, IIFE?)   
-// need to figure out how to trigger win condition and tie
-// board will be a 3x3 array
-//  2) Player (Factory function?), two players
-//  3) A Controller (They hinted at IIFE)
-//  4) Switch Players, changing O to X and viseVersa
-
 
 // Modal
 const gameBoard = (() => {
@@ -38,39 +30,140 @@ const gameBoard = (() => {
 
     function placeTic(row, col, name) {
         if (gameOverStatus === true) {
-            console.log("Cannot Place, Game is over!!")
             return;
         }
         if (board[row][col] !== null) {
-            // console.log("Cannot Place Here")
             return false;
         }
 
         board[row][col] = name;
-        // console.log("Tic Placed!");
-        // console.log(row, col);
         return true;
     };
 
-    function checkWin(name) {
+    function checkWin() {
         for (const line of winningLines) {
             const [p1, p2, p3] = line.map(([r, c]) => board[r][c]);
             if (p1 !== null && p1 === p2 && p1 === p3) {
-                setWin(true);
+                gameOverStatus = true;
                 return true;
             }
         }
     }
 
-    // for testing
-    function setWin(status) {
-        gameOverStatus = status;
+    function checkTie() {
+        if (isFilled() && gameOverStatus === false) {
+            gameOverStatus = true;
+            return true;
+        }
+    }
+
+    function isFilled() {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function reset() {
+        for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 3; c++) {
+                board[r][c] = null;
+            }
+        };
+        gameOverStatus = false;
     }
 
     return {
         placeTic,
         checkWin,
-        // setWin,
+        checkTie,
+        reset,
+    }
+})();
+
+
+const view = (() => {
+    const body = document.getElementById("body");
+    function createBoard() {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                const button = document.createElement("button");
+                button.classList.add("tacBtn");
+                button.textContent = "-";
+                button.dataset.row = i;
+                button.dataset.col = j;
+                button.disabled = true;
+                body.appendChild(button);
+            }
+        }
+    };
+
+    function updateBoard(row, col, marker) {
+        const button = document.querySelector(
+            `[data-row="${row}"][data-col="${col}"]`
+        );
+        button.textContent = marker;
+    };
+
+    function enableBoard() {
+        const tacs = document.querySelectorAll(".tacBtn");
+        for (const tac of tacs) {
+            tac.disabled = false;
+        }
+    };
+
+    function displayWinner(name) {
+        const display = document.querySelector("#display");
+        display.textContent = ` Winner: ${name}`;
+    }
+
+    function displayTie() {
+        const display = document.querySelector("#display");
+        display.textContent = "TIE!!!";
+    }
+
+    //TESTING
+    const playerOne = document.querySelector("#player1");
+    const playerTwo = document.querySelector("#player2");
+    // OR
+    // const playerNames = document.querySelectorAll("[contenteditable]");
+
+    function disableUserInput() {
+        playerOne.contentEditable = "false";
+        playerTwo.contentEditable = "false";
+    }
+
+    function getNames () {
+        const p1 = playerOne.textContent.trim();
+        const p2 = playerTwo.textContent.trim();
+        return [p1, p2];
+    }
+
+    function reset() {
+        const btn = document.querySelectorAll(".tacBtn");
+        btn.forEach((btn) => {
+            btn.textContent = "-";
+        });
+
+        const display = document.querySelector("#display");
+        display.textContent = "";
+    }
+
+    //Initialize TicTacToe
+    createBoard();
+
+    return {
+        updateBoard,
+        enableBoard,
+        displayWinner,
+        displayTie,
+        disableUserInput,
+        getNames,
+        reset,
     }
 })();
 
@@ -81,73 +174,41 @@ function createPlayer(name, marker) {
     };
 }
 
-// TODO: turn view object to IIFE and only expose updateView
-// Bc we want one instance of createView and expose updateView to be reuseable
-const body = document.getElementById("body");
-
-// View
-const view = (() => {
-    function createView() {
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const button = document.createElement("button");
-                button.setAttribute("id", "tacBtn");
-                button.textContent = "-";
-                button.dataset.row = i;
-                button.dataset.col = j;
-                button.disabled = true;
-                body.appendChild(button);
-            }
-        }
-    };
-
-    function updateView(row, col, marker) {
-        const button = document.querySelector(
-            `[data-row="${row}"][data-col="${col}"]`
-        );
-        button.textContent = marker;
-    };
-
-    function enableBtn() {
-        const btns = document.querySelectorAll("#tacBtn");
-        for (const btn of btns) {
-            btn.disabled = false;
-        }
-    };
-
-    function winnerDisplay(name) {
-        const winner = document.querySelector("#winner-status");
-        winner.textContent = ` Winner: ${name}`;
-    }
-
-    //Initialize
-    createView();
-
-    return {
-        updateView,
-        enableBtn,
-        winnerDisplay,
-    }
-})();
-
-// Controller
 const controller = (() => {
-    const player1 = createPlayer("Ben", "X");
-    const player2 = createPlayer("Kenny", "O");
+    const player1 = createPlayer("", "X");
+    const player2 = createPlayer("", "O");
 
     let currentPlayer = player1;
 
     function playGame(row, col) {
         const placed = gameBoard.placeTic(row, col, currentPlayer.marker);
         if (placed === true) {
-            view.updateView(row, col, currentPlayer.marker);
+            view.updateBoard(row, col, currentPlayer.marker);
 
-            if (gameBoard.checkWin(currentPlayer.name)) {
-                view.winnerDisplay(currentPlayer.name);
+            if (gameBoard.checkWin()) {
+                view.displayWinner(currentPlayer.name);
             }
+            if (gameBoard.checkTie()) {
+                view.displayTie();
+            };
             currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
-        return;
+    }
+    
+    function startGame () {
+        const [p1, p2] = view.getNames();
+        player1.name = p1 || "Player 1";
+        player2.name = p2 || "Player 2";
+
+        view.enableBoard();
+        view.disableUserInput();
+    }
+
+    function resetGame() {
+        gameBoard.reset();
+        view.reset();
+        //Resets Player
+        currentPlayer = player1;
     }
 
     function getCurrentPlayer() {
@@ -156,31 +217,35 @@ const controller = (() => {
 
     return {
         playGame,
+        startGame,
+        resetGame,
         getCurrentPlayer,
-        player1,
-        player2,
+        // player1,
+        // player2,
     }
 })();
 
 
+const body = document.querySelector("body");
+
 body.addEventListener("click", (e) => {
-    const target = e.target.dataset;
-    if (!e.target.matches("button")) { return }
+    // const playerOne = document.querySelector("#player1");
+    // const playerTwo = document.querySelector("#player2");
 
-    const row = Number(target.row);
-    const col = Number(target.col);
-    console.log(controller.getCurrentPlayer());
-    controller.playGame(row, col);
-});
+    if (e.target.matches(".tacBtn")) {
+        const target = e.target.dataset;
+        const row = Number(target.row);
+        const col = Number(target.col);
+        //NEED TO REPLACE THIS w/ UI that shows whos turn it is
+        console.log(controller.getCurrentPlayer());
+        controller.playGame(row, col);
+    }
 
-const playerOne = document.querySelector("#player1");
-const playerTwo = document.querySelector("#player2");
-const startBtn = document.querySelector("#start");
+    if (e.target.matches("#start")) {
+        controller.startGame();
+    }
 
-startBtn.addEventListener("click", () => {
-    view.enableBtn();
-    controller.player1.name = playerOne.textContent.trim();
-    controller.player2.name = playerTwo.textContent.trim();
-    playerOne.contentEditable = "false";
-    playerTwo.contentEditable = "false";
+    if (e.target.matches("#reset")) {
+        controller.resetGame();
+    }
 });

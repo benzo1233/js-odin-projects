@@ -126,3 +126,15 @@ button {
 #start:hover {
   background-color: rgba(255, 255, 255, 0.081);
 }
+
+
+#reset {
+  font-size: 2rem;
+  border: solid 1px white;
+  border-radius: 20px;
+  padding: 10px 60px;
+}
+
+#reset:hover {
+  background-color: rgba(255, 255, 255, 0.081);
+}
