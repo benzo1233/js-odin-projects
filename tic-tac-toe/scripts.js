@@ -235,9 +235,9 @@ const controller = (() => {
         player2.name = p2 || "Player 2";
 
         game.setPlayers(player1, player2);
-        view.displayTurn(game.getTurn());
         view.enableBoard();
         view.disableUserInput();
+        syncTurnDisplay();
     }
 
     function playGame(row, col) {
@@ -248,10 +248,7 @@ const controller = (() => {
             view.updateBoard(row, col, currentPlayer.marker);
             game.switchTurn();
 
-            //Update Turn and Highlight next players turn
-            const updatedPlayerTurn = game.getTurn();
-            view.displayTurn(updatedPlayerTurn);
-
+            
             if (gameBoard.checkWin()) {
                 view.displayWinner(currentPlayer.name);
                 return;
@@ -260,18 +257,20 @@ const controller = (() => {
                 view.displayTie();
                 return;
             };
+            
+            syncTurnDisplay();
         }
     }
 
     function resetGame() {
-        game.reset();
         gameBoard.reset();
         view.reset();
+        game.reset(); //game.reset flips the current player to whoever did not start last round. b/c of this we need a to sync the display after reset is applied.
+        syncTurnDisplay();
+    }
 
-        // TO IMPLEMENT, ALLOW USER TO SELECT WHO GOES FIRST, currently spamming reset switches who starts first
-        const updatedPlayerTurn = game.getTurn();
-        view.displayTurn(updatedPlayerTurn);
-
+    function syncTurnDisplay() {
+        view.displayTurn(game.getTurn());
     }
 
     return {
