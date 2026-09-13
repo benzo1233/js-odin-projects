@@ -1,3 +1,4 @@
+// ======================== GAME BOARD ============================
 
 const gameBoard = (() => {
     let board = [];
@@ -85,6 +86,7 @@ const gameBoard = (() => {
     }
 })();
 
+// ======================== VIEW ============================
 
 const view = (() => {
     const body = document.getElementById("body");
@@ -180,6 +182,9 @@ function createPlayer(name, marker) {
     };
 }
 
+// ======================== GAME  ============================
+
+
 const game = (() => {
     let currTurn;
     let lastStarter;
@@ -216,6 +221,9 @@ const game = (() => {
         reset,
     }
 })();
+
+// ======================== CONTROLLER ============================
+
 
 const controller = (() => {
     const player1 = createPlayer("", "X");
@@ -259,7 +267,7 @@ const controller = (() => {
         game.reset();
         gameBoard.reset();
         view.reset();
-        
+
         // TO IMPLEMENT, ALLOW USER TO SELECT WHO GOES FIRST, currently spamming reset switches who starts first
         const updatedPlayerTurn = game.getTurn();
         view.displayTurn(updatedPlayerTurn);
@@ -273,6 +281,7 @@ const controller = (() => {
     }
 })();
 
+// ======================== LISTENERS ============================
 
 const body = document.querySelector("body");
 
