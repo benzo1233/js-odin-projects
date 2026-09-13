@@ -1,15 +1,15 @@
 
-// Modal
 const gameBoard = (() => {
     let board = [];
-    let gameOverStatus = false;
+    let isGameOver = false;
 
     //Build Board
-    for (let i = 0; i < 3; i++) {
-        board[i] = [];
-        for (let j = 0; j < 3; j++) {
-            board[i].push(null);
+    for (let row = 0; row < 3; row++) {
+        let row = [];
+        for (let col = 0; col < 3; col++) {
+            row.push(null);
         }
+        board.push(row);
     };
 
     const winningLines = [
@@ -29,7 +29,7 @@ const gameBoard = (() => {
     ];
 
     function placeTic(row, col, name) {
-        if (gameOverStatus === true) {
+        if (isGameOver === true) {
             return;
         }
         if (board[row][col] !== null) {
@@ -41,18 +41,18 @@ const gameBoard = (() => {
     };
 
     function checkWin() {
-        for (const line of winningLines) {
-            const [p1, p2, p3] = line.map(([r, c]) => board[r][c]);
-            if (p1 !== null && p1 === p2 && p1 === p3) {
-                gameOverStatus = true;
+        for (const winningLine of winningLines) {
+            const [first, second, third] = winningLine.map(([r, c]) => board[r][c]);
+            if (first !== null && first === second && first === third) {
+                isGameOver = true;
                 return true;
             }
         }
     }
 
     function checkTie() {
-        if (isFilled() && gameOverStatus === false) {
-            gameOverStatus = true;
+        if (isFilled() && isGameOver === false) {
+            isGameOver = true;
             return true;
         }
     }
@@ -74,7 +74,7 @@ const gameBoard = (() => {
                 board[r][c] = null;
             }
         };
-        gameOverStatus = false;
+        isGameOver = false;
     }
 
     return {
@@ -88,14 +88,18 @@ const gameBoard = (() => {
 
 const view = (() => {
     const body = document.getElementById("body");
+    const display = document.querySelector("#display");
+    const playerOne = document.querySelector("#player1");
+    const playerTwo = document.querySelector("#player2");
+
     function createBoard() {
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
+        for (let row = 0; row < 3; row++) {
+            for (let col = 0; col < 3; col++) {
                 const button = document.createElement("button");
                 button.classList.add("tacBtn");
                 button.textContent = "-";
-                button.dataset.row = i;
-                button.dataset.col = j;
+                button.dataset.row = row;
+                button.dataset.col = col;
                 button.disabled = true;
                 body.appendChild(button);
             }
@@ -111,45 +115,46 @@ const view = (() => {
 
     function enableBoard() {
         const tacs = document.querySelectorAll(".tacBtn");
-        for (const tac of tacs) {
+        tacs.forEach(tac => {
             tac.disabled = false;
-        }
+        });
     };
 
+    function displayTurn(currentPlayer) {
+        if (currentPlayer.marker === "X") {
+            playerOne.classList.add("active-turn");
+            playerTwo.classList.remove("active-turn");
+        } else {
+            playerTwo.classList.add("active-turn");
+            playerOne.classList.remove("active-turn");
+        }
+    }
+
     function displayWinner(name) {
-        const display = document.querySelector("#display");
         display.textContent = ` Winner: ${name}`;
     }
 
     function displayTie() {
-        const display = document.querySelector("#display");
         display.textContent = "TIE!!!";
     }
-
-    //TESTING
-    const playerOne = document.querySelector("#player1");
-    const playerTwo = document.querySelector("#player2");
-    // OR
-    // const playerNames = document.querySelectorAll("[contenteditable]");
 
     function disableUserInput() {
         playerOne.contentEditable = "false";
         playerTwo.contentEditable = "false";
     }
 
-    function getNames () {
+    function getNames() {
         const p1 = playerOne.textContent.trim();
         const p2 = playerTwo.textContent.trim();
         return [p1, p2];
     }
 
     function reset() {
-        const btn = document.querySelectorAll(".tacBtn");
-        btn.forEach((btn) => {
-            btn.textContent = "-";
+        const tacs = document.querySelectorAll(".tacBtn");
+        tacs.forEach((tac) => {
+            tac.textContent = "-";
         });
 
-        const display = document.querySelector("#display");
         display.textContent = "";
     }
 
@@ -159,6 +164,7 @@ const view = (() => {
     return {
         updateBoard,
         enableBoard,
+        displayTurn,
         displayWinner,
         displayTie,
         disableUserInput,
@@ -174,54 +180,96 @@ function createPlayer(name, marker) {
     };
 }
 
+const game = (() => {
+    let currTurn;
+    let lastStarter;
+    let playerOne;
+    let playerTwo;
+
+    function setPlayers(player1, player2) {
+        playerOne = player1;
+        playerTwo = player2;
+        if (lastStarter === undefined) {
+            currTurn = playerOne;
+            lastStarter = currTurn;
+        }
+
+    }
+
+    function getTurn() {
+        return currTurn;
+    }
+
+    function switchTurn() {
+        currTurn = currTurn === playerOne ? playerTwo : playerOne;
+    }
+
+    function reset() {
+        lastStarter = lastStarter === playerOne ? playerTwo : playerOne;
+        currTurn = lastStarter;
+    }
+
+    return {
+        setPlayers,
+        getTurn,
+        switchTurn,
+        reset,
+    }
+})();
+
 const controller = (() => {
     const player1 = createPlayer("", "X");
     const player2 = createPlayer("", "O");
 
-    let currentPlayer = player1;
-
-    function playGame(row, col) {
-        const placed = gameBoard.placeTic(row, col, currentPlayer.marker);
-        if (placed === true) {
-            view.updateBoard(row, col, currentPlayer.marker);
-
-            if (gameBoard.checkWin()) {
-                view.displayWinner(currentPlayer.name);
-            }
-            if (gameBoard.checkTie()) {
-                view.displayTie();
-            };
-            currentPlayer = currentPlayer === player1 ? player2 : player1;
-        }
-    }
-    
-    function startGame () {
+    function startGame() {
         const [p1, p2] = view.getNames();
         player1.name = p1 || "Player 1";
         player2.name = p2 || "Player 2";
 
+        game.setPlayers(player1, player2);
+        view.displayTurn(game.getTurn());
         view.enableBoard();
         view.disableUserInput();
     }
 
-    function resetGame() {
-        gameBoard.reset();
-        view.reset();
-        //Resets Player
-        currentPlayer = player1;
+    function playGame(row, col) {
+        const currentPlayer = game.getTurn();
+        const placed = gameBoard.placeTic(row, col, currentPlayer.marker);
+
+        if (placed === true) {
+            view.updateBoard(row, col, currentPlayer.marker);
+            game.switchTurn();
+
+            //Update Turn and Highlight next players turn
+            const updatedPlayerTurn = game.getTurn();
+            view.displayTurn(updatedPlayerTurn);
+
+            if (gameBoard.checkWin()) {
+                view.displayWinner(currentPlayer.name);
+                return;
+            }
+            if (gameBoard.checkTie()) {
+                view.displayTie();
+                return;
+            };
+        }
     }
 
-    function getCurrentPlayer() {
-        return currentPlayer;
+    function resetGame() {
+        game.reset();
+        gameBoard.reset();
+        view.reset();
+        
+        // TO IMPLEMENT, ALLOW USER TO SELECT WHO GOES FIRST, currently spamming reset switches who starts first
+        const updatedPlayerTurn = game.getTurn();
+        view.displayTurn(updatedPlayerTurn);
+
     }
 
     return {
-        playGame,
         startGame,
+        playGame,
         resetGame,
-        getCurrentPlayer,
-        // player1,
-        // player2,
     }
 })();
 
@@ -229,15 +277,10 @@ const controller = (() => {
 const body = document.querySelector("body");
 
 body.addEventListener("click", (e) => {
-    // const playerOne = document.querySelector("#player1");
-    // const playerTwo = document.querySelector("#player2");
-
     if (e.target.matches(".tacBtn")) {
-        const target = e.target.dataset;
-        const row = Number(target.row);
-        const col = Number(target.col);
-        //NEED TO REPLACE THIS w/ UI that shows whos turn it is
-        console.log(controller.getCurrentPlayer());
+        const row = Number(e.target.dataset.row);
+        const col = Number(e.target.dataset.col);
+
         controller.playGame(row, col);
     }
 
