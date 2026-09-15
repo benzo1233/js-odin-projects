@@ -30,9 +30,7 @@ const gameBoard = (() => {
     ];
 
     function placeTic(row, col, name) {
-        if (isGameOver === true) {
-            return;
-        }
+        if (isGameOver) return;
         if (board[row][col] !== null) {
             return false;
         }
@@ -244,11 +242,9 @@ const controller = (() => {
         const currentPlayer = game.getTurn();
         const placed = gameBoard.placeTic(row, col, currentPlayer.marker);
 
-        if (placed === true) {
+        if (placed) {
             view.updateBoard(row, col, currentPlayer.marker);
-            game.switchTurn();
 
-            
             if (gameBoard.checkWin()) {
                 view.displayWinner(currentPlayer.name);
                 return;
@@ -257,9 +253,9 @@ const controller = (() => {
                 view.displayTie();
                 return;
             };
-            
+            game.switchTurn();
             syncTurnDisplay();
-        }
+        };
     }
 
     function resetGame() {
