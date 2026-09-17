@@ -1,4 +1,4 @@
-let display = document.querySelector("#display");
+const display = document.querySelector("#display");
 const dialog = document.querySelector("#book-dialog");
 const body = document.querySelector("body");
 const form = document.querySelector("form");
@@ -11,7 +11,7 @@ class Book {
         this.read = false;
     }
 
-    readStatus() {
+    toggleRead() {
         this.read = !this.read;
     }
 }
@@ -48,18 +48,18 @@ class Library {
         return card;
     }
 
-    addBookToLibrary(name, author) {
+    add(name, author) {
         const id = crypto.randomUUID();
         this.#books.push(new Book(id, name, author));
     }
 
-    getLibrary() {
+    getBooks() {
         return this.#books;
     }
 
-    // setLibrary(books) {
-    //     return this.#books = books;
-    // }
+    findById(cardId) {
+        return this.#books.find(b => b.id === cardId);
+    }
 
     deleteBook(book) {
         this.#books = this.#books.filter(b => b !== book); /*keep every book except the one matching the book reference */
@@ -90,18 +90,17 @@ body.addEventListener("click", (e) => {
     }
 
     const card = target.closest(".book-card"); /*looks towards ancestors for .book-card*/
-    const myBooks = library.getLibrary();
-    const book = myBooks.find(b => b.id === card.dataset.id); /*returns refernece to our object */
+    if (!card) return;
 
-    // Future implement target.dataset.action?
+    const book = library.findById(card.dataset.id);
+
+    // Future implement target.dataset.action? Need to only refresh specific target instead of reinitializing everything
     if (target.textContent === "Toggle Read") {
-        book.readStatus();
+        book.toggleRead();
         library.displayLibrary();
     }
     if (target.textContent === "Delete") {
         library.deleteBook(book);
-
-        dialog.close();
         library.displayLibrary();
     }
 });
@@ -113,7 +112,7 @@ form.addEventListener("submit", (e) => {
     const name = formData.get("book");
     const author = formData.get("author");
 
-    library.addBookToLibrary(name, author);
+    library.add(name, author);
     library.displayLibrary();
     form.reset();
     dialog.close();
