@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 
 export default {
     mode: "development",
-    entry: "./src/scripts.js",
+    entry: "./src/modules/index.js",
     output: {
         filename: "main.js",
         path: path.resolve(import.meta.dirname, "dist"),
