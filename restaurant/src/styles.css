@@ -1,5 +1,10 @@
+@import "./fonts/filosofia/stylesheet.css";
+/* https://thomaskeller.com/perseny/ */
+
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -20,21 +25,35 @@ body {
   line-height: 1.5;
   /* 5. Improve text rendering */
   -webkit-font-smoothing: antialiased;
+  font-family: 'Filosofia', sans-serif;
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -42,13 +61,86 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
 /*
   10. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
+}
+
+/* MY STYLES */
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20%;
+  /* justify-content: center; */
+  height: 100vh;
+  gap: 5vh;
+}
+
+/* header {
+  padding: 1rem 0;
+} */
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: 0.5ch;
+  padding: 0vh 0 4vh;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+button {
+  background-color: white;
+  border: none;
+  border-radius: 40px;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: calc(1.1rem + 1vw);
+  font-weight: 550;
+  letter-spacing: 0.2ch;
+}
+
+
+img {
+  height: auto;
+  max-height: 60vh;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  padding-bottom: 1rem; /*Hard Coded*/
+}
+
+p {
+  margin: 0 0 4px 1rem;
+}
+
+
+@media (min-width: 768px) {
+  h1 {
+    padding: 1rem;
+  }
+  body {
+    margin-top: 0;
+  }
+  button {
+    font-size: 1.1rem;
+  }
 }

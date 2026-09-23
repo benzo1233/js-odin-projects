@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Filosofia';
+    src: url('FilosofiaRegular.woff2') format('woff2'),
+        url('FilosofiaRegular.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
