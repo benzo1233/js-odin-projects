@@ -2,6 +2,7 @@
 import { createToDo } from './createItem.js'
 import { addItemToView } from './dom.js'
 import { loadTodos, saveTodos } from './localStorage.js'
+import './dialog.js'
 import '../styles.css'
 
 let todos = loadTodos();

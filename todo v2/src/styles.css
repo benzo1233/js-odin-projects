@@ -1,5 +1,7 @@
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -23,18 +25,31 @@ body {
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -42,28 +57,49 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
 /*
   10. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
 
+/* MY STYLES */
 
 body {
-    display: grid;
-    grid-template-columns: 3fr 7fr;
-    padding: auto;
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+  padding: 1rem;
 }
 
 #sidebar {
-    background-color: red;
+  background-color: red;
+  padding: 1rem;
 }
 
 #container {
-    background-color: yellow;
+  background-color: yellow;
+  padding: 1rem;
+}
+
+#sidebar button {
+  width: 100%;
+  border: none;
+}
+
+#todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
 }
