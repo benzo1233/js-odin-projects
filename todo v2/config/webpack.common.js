@@ -8,7 +8,7 @@ export default {
   },
   output: {
     filename: '[name].[contenthash].bundle.js',
-    path: path.resolve(import.meta.dirname, 'dist'),
+    path: path.resolve(import.meta.dirname,'..','dist'),
     clean: true,
   },
   plugins: [
