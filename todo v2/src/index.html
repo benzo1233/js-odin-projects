@@ -15,22 +15,22 @@
             <form id="todo-form">
                 <!-- // Title, Description, dueDate, Priority (1-5?), notes/checklist -->
                 <label for="title"></label>
-                <input type="text" id="title" placeholder="Enter a title" required>
+                <input type="text" id="title" placeholder="Enter a title" name="title" required>
 
                 <label for="description"></label>
-                <input type="text" id="description" placeholder="Enter a Description" required>
+                <input type="text" id="description" placeholder="Enter a Description" name="description" required>
 
                 <label for="duedate"></label>
-                <input type="datetime-local" id="duedate" placeholder="Enter a Due Date" required>
+                <input type="datetime-local" id="duedate" placeholder="Enter a Due Date" name="duedate" required>
 
                 <div>
                     <label for="priority">Priority: </label>
-                    <input type="number" id="priority" placeholder="Select Priority" min="1" max="3" step="1" value="1" required>
+                    <input type="number" id="priority" placeholder="Select Priority" min="1" max="3" step="1" value="1"  name="priority"required>
 
                 </div>
 
                 <label for="notes"></label>
-                <input type="text" id="notes" placeholder="Notes" required>
+                <input type="text" id="notes" placeholder="Notes" name="notes" required>
 
                 <button type="submit">Submit</button>
                 <button type="button" id="closeBtn">Cancel</button>
