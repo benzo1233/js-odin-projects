@@ -1,13 +1,16 @@
-import { renderItem } from './render.js'
-import { loadTodos } from './localStorage.js'
-import { initTodos, initProject } from './controller.js'
+import { renderProject } from './render.js'
+import { loadProjects } from './localStorage.js'
+import { initTodos, initProject, createProjectTab} from './controller.js'
 import './controller.js'
 import '../styles.css'
+import { setProjects } from './state.js'
 
-let todos = loadTodos();
-todos.forEach(renderItem);   // render what's already saved
+let projects = loadProjects();
+setProjects(projects);
+projects.forEach(renderProject);   // render what's already saved
+projects.forEach(createProjectTab);   // rebuild sidebar tabs for saved projects
 
-initTodos(todos);
+initTodos(projects);
 initProject();
 
 

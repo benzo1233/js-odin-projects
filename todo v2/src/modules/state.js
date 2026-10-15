@@ -10,10 +10,18 @@ export function getProject (id) {
     return project;
 }
 
+export function getAllProjects () {
+    return projects;
+}
+
 export function getActiveProjectId() {
     return activeProjectID;
 }
 
 export function setActiveProject(id) {
     activeProjectID = id;
+}
+
+export function setProjects (p) {
+    projects = p;
 }

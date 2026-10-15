@@ -1,8 +1,8 @@
-export function createToDo (title, des, dueDate, priority, notes) {
+export function createTodo (title, description, dueDate, priority, notes) {
     return {
         id: crypto.randomUUID(),
         title,
-        des,
+        description,
         dueDate,
         priority,
         notes
@@ -13,7 +13,7 @@ export function createProject () {
     return {
         id: crypto.randomUUID(),
         title: "",
-        des: "",
+        description: "",
         todos: [],
     }
 }

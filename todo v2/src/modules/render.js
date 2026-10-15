@@ -1,12 +1,12 @@
 const container = document.querySelector("#container");
 const sidebar = document.querySelector("#sidebar");
 
-export function renderItem(item) {
-    console.log(item);
+export function renderTodo(todo) {
+    console.log(todo);
 
-    const p = document.createElement('p');
-    p.textContent = `${item.title} - ${item.des} - Due: ${item.dueDate} - Priority: ${item.priority} - Notes: ${item.notes}`;
-    container.appendChild(p);
+    const todoElement = document.createElement('p');
+    todoElement.textContent = `${todo.title} - ${todo.description} - Due: ${todo.dueDate} - Priority: ${todo.priority} - Notes: ${todo.notes}`;
+    container.appendChild(todoElement);
 }
 
 export function renderProject(project) {
@@ -14,7 +14,7 @@ export function renderProject(project) {
 
     container.innerHTML = '';
     for (const todo of project.todos) {
-        renderItem(todo);
+        renderTodo(todo);
     }
 }
 
