@@ -1,9 +1,9 @@
-import { createToDo } from './createItem.js'
-import { addItemToView } from './dom.js'
+import { createToDo, createProject} from './factories.js'
+import { addItemToView, addProjectToView} from './dom.js'
 import { saveTodos } from './localStorage.js'
 
 
-export function initDialog(todos) {
+export function initTodos(todos) {
     const dialog = document.querySelector("#todo-dialog");
     const form = document.querySelector("#todo-form");
     const openbtn = document.querySelector("#addTask")
@@ -35,6 +35,15 @@ export function initDialog(todos) {
         addItemToView(todo);
 
 
+    });
+}
+
+
+export function initProject() {
+    const project = document.querySelector("#addProject");
+    project.addEventListener("click", () => {
+        const proj = createProject();
+        addProjectToView(proj);
     });
 }
 
