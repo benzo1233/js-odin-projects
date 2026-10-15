@@ -1,4 +1,3 @@
-
 export function saveTodos(todo) {
     localStorage.setItem("todos", JSON.stringify(todo));
 }

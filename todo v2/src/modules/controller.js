@@ -1,6 +1,7 @@
 import { createToDo, createProject} from './factories.js'
-import { addItemToView, addProjectToView} from './dom.js'
+import { renderItem, renderProject} from './render.js'
 import { saveTodos } from './localStorage.js'
+import { addProject, getProject , getActiveProjectId, setActiveProject} from './state.js'
 
 
 export function initTodos(todos) {
@@ -30,20 +31,34 @@ export function initTodos(todos) {
             formData.get('notes'),
         );
 
-        todos.push(todo);
-        saveTodos(todos);
-        addItemToView(todo);
+        const project = getProject(getActiveProjectId());
+        project.todos.push(todo);
+        renderProject(project);
 
-
+        dialog.close();
     });
 }
 
 
 export function initProject() {
-    const project = document.querySelector("#addProject");
-    project.addEventListener("click", () => {
-        const proj = createProject();
-        addProjectToView(proj);
+    const sidebar = document.querySelector("#sidebar");
+    const addProjectBtn = document.querySelector("#addProject");
+
+    addProjectBtn.addEventListener("click", () => {
+        const project = createProject();
+        addProject(project);
+        setActiveProject(project.id);
+        renderProject(project);
+        
+        // Create Sidebar Tab 
+        const btn = document.createElement("button");
+        btn.textContent = "test";
+        sidebar.appendChild(btn);
+
+        btn.addEventListener("click", () => {
+            setActiveProject(project.id);
+            renderProject(project);
+        });
     });
 }
 
