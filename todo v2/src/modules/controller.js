@@ -1,7 +1,7 @@
-import { createTodo, createProject } from './factories.js'
-import { renderProject } from './render.js'
-import { saveProjectLocally } from './localStorage.js'
 import { addProject, getProject, getAllProjects, getActiveProjectId, setActiveProject } from './state.js'
+import { createTodo, createProject } from './factories.js'
+import { renderProject, createProjectTab } from './render.js'
+import { saveProjectLocally } from './localStorage.js'
 
 
 export function initTodos() {
@@ -20,7 +20,6 @@ export function initTodos() {
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
-
         const formData = new FormData(form);
 
         const todo = createTodo(
@@ -31,9 +30,9 @@ export function initTodos() {
             formData.get('notes'),
         );
 
-        const project = getProject(getActiveProjectId());
-        project.todos.push(todo);
-        renderProject(project);
+        const currActiveProject = getProject(getActiveProjectId());
+        currActiveProject.todos.push(todo);
+        renderProject(currActiveProject);
         saveProjectLocally(getAllProjects());
 
         dialog.close();
@@ -48,23 +47,17 @@ export function initProject() {
         const newProject = createProject();
         addProject(newProject);
         setActiveProject(newProject.id);
-        renderProject(newProject);
         saveProjectLocally(getAllProjects());
-        createProjectTab(newProject);
+        renderProject(newProject);
+        addProjectTab(newProject);
     });
 }
 
-
-export function createProjectTab(project) {
-    const sidebar = document.querySelector("#sidebar");
-
-    const projectTabBtn = document.createElement("button");
-    projectTabBtn.textContent = project.title || "Project";
-    sidebar.appendChild(projectTabBtn);
-
-    projectTabBtn.addEventListener("click", () => {
+// Sets project as Active and Renders, (Improve? too many responsibilities?)
+export function addProjectTab(project) {
+    const tab = createProjectTab(project);
+    tab.addEventListener("click", () => {
         setActiveProject(project.id);
         renderProject(project);
     });
 }
-

@@ -1,7 +1,7 @@
 const container = document.querySelector("#container");
 const sidebar = document.querySelector("#sidebar");
 
-export function renderTodo(todo) {
+function renderTodo(todo) {
     console.log(todo);
 
     const todoElement = document.createElement('p');
@@ -16,6 +16,14 @@ export function renderProject(project) {
     for (const todo of project.todos) {
         renderTodo(todo);
     }
+}
+
+export function createProjectTab(project) {
+    const projectTabBtn = document.createElement("button");
+    projectTabBtn.textContent = project.title || "Project";
+    sidebar.appendChild(projectTabBtn);
+
+    return projectTabBtn;
 }
 
 
