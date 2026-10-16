@@ -41,10 +41,28 @@ export function initTodos() {
 
 
 export function initProject() {
-    const addProjectBtn = document.querySelector("#addProject");
+    const dialog = document.querySelector("#project-dialog");
+    const form = document.querySelector("#project-form");
+    const openBtn = document.querySelector("#addProject")
+    const closeBtn = document.querySelector("#projectCloseBtn")
 
-    addProjectBtn.addEventListener("click", () => {
-        const newProject = createProject();
+    openBtn.addEventListener("click", () => {
+        dialog.showModal();
+    });
+
+    closeBtn.addEventListener("click", () => {
+        dialog.close();
+    });
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        const newProject = createProject(
+            formData.get("projectName"),
+            formData.get("projectDescription")
+        );
+
         addProject(newProject);
         setActiveProject(newProject.id);
         saveProjectLocally(getAllProjects());

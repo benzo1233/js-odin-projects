@@ -9,11 +9,11 @@ export function createTodo (title, description, dueDate, priority, notes) {
     }
 }
 
-export function createProject () {
+export function createProject (title, description) {
     return {
         id: crypto.randomUUID(),
-        title: "",
-        description: "",
+        title: title,
+        description: description,
         todos: [],
     }
 }

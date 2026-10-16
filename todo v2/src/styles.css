@@ -93,13 +93,23 @@ body {
   padding: 1rem;
 }
 
-#sidebar button {
-  width: 100%;
-  border: none;
-}
 
 #todo-form {
   display: flex;
   flex-direction: column;
   gap: .25rem;
 }
+
+#sidebar {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#myProjects {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
