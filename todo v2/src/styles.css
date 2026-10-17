@@ -113,3 +113,10 @@ body {
   gap: 0.5rem;
 }
 
+.todo-details {
+  display: none;
+}
+
+.todo.open .todo-details {
+  display: block;
+}
