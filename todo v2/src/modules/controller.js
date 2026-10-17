@@ -68,6 +68,8 @@ export function initProject() {
         saveProjectLocally(getAllProjects());
         renderProject(newProject);
         addProjectTab(newProject);
+
+        dialog.close();
     });
 }
 

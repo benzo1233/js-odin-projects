@@ -10,24 +10,6 @@
 <body>
     <div id="sidebar">
         <button id="Home">Home </button>
-        <div id="myProjects">
-            <button>My Projects</button>
-
-            <button id="addProject">[ + ]</button>
-            <dialog id="project-dialog">
-                <h2>Add Project</h2>
-                <form id="project-form">
-                    <label for="projectName"></label>
-                    <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
-
-                    <label for="projectDescription"></label>
-                    <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
-                    
-                    <button type="submit">Submit</button>
-                    <button type="button" id="projectCloseBtn">Cancel</button>
-                </form>
-            </dialog>
-        </div>
 
         <button id="addTask">Add Task [ + ]</button>
         <dialog id="todo-dialog">
@@ -56,6 +38,26 @@
                 <button type="button" id="closeBtn">Cancel</button>
             </form>
         </dialog>
+
+        <div id="myProjects">
+            <button>My Projects</button>
+
+            <button id="addProject">[ + ]</button>
+            <dialog id="project-dialog">
+                <h2>Add Project</h2>
+                <form id="project-form">
+                    <label for="projectName"></label>
+                    <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
+
+                    <label for="projectDescription"></label>
+                    <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
+
+                    <button type="submit">Submit</button>
+                    <button type="button" id="projectCloseBtn">Cancel</button>
+                </form>
+            </dialog>
+        </div>
+
     </div>
 
     <div id="container">
