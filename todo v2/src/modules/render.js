@@ -1,3 +1,5 @@
+import { parseISO, format } from "date-fns"
+
 const container = document.querySelector("#container");
 const sidebar = document.querySelector("#sidebar");
 
@@ -5,7 +7,13 @@ function renderTodo(todo) {
     console.log(todo);
 
     const todoElement = document.createElement('p');
-    todoElement.textContent = `${todo.title} - ${todo.description} - Due: ${todo.dueDate} - Priority: ${todo.priority} - Notes: ${todo.notes}`;
+    todoElement.textContent =
+        `${todo.title} 
+        - ${todo.description} 
+        - Due: ${format(parseISO(todo.dueDate), "MMM dd, yyyy h:mm a")} 
+        - Priority: ${todo.priority}
+        - Notes: ${todo.notes}`;
+
     container.appendChild(todoElement);
 }
 
