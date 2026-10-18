@@ -7,16 +7,6 @@ import { saveProjectLocally } from './localStorage.js'
 export function initTodos() {
     const dialog = document.querySelector("#todo-dialog");
     const form = document.querySelector("#todo-form");
-    const openBtn = document.querySelector("#addTask")
-    const closeBtn = document.querySelector("#closeBtn")
-
-    // openBtn.addEventListener("click", () => {
-    //     dialog.showModal();
-    // });
-
-    closeBtn.addEventListener("click", () => {
-        dialog.close();
-    });
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -43,16 +33,6 @@ export function initTodos() {
 export function initProject() {
     const dialog = document.querySelector("#project-dialog");
     const form = document.querySelector("#project-form");
-    const openBtn = document.querySelector("#addProject")
-    const closeBtn = document.querySelector("#projectCloseBtn")
-
-    openBtn.addEventListener("click", () => {
-        dialog.showModal();
-    });
-
-    closeBtn.addEventListener("click", () => {
-        dialog.close();
-    });
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -89,18 +69,31 @@ const sidebar = document.querySelector("#sidebar");
 sidebar.addEventListener("click", (e) => {
     const btn = e.target.closest("button");
     if (!btn) { return };
-
+    // const action = actions[btn.dataset.action];
     const action = actions[btn.dataset.action];
+    console.log(btn.dataset.action);
 
-    
-
+    if (action) {
+        action();
+    }
 });
 
 const actions = { 
-    "addTask": openTaskDialog(),
+    "openTaskDialog": openTaskDialog,
+    "closeTaskDialog": closeTaskDialog,
+    "openProjectDialog": openProjectDialog,
+    "closeProjectDialog": closeProjectDialog,
 }
 
 function openTaskDialog() {
-    const dialog = document.querySelector("#todo-dialog");
-    dialog.showModal();
+    document.querySelector("#todo-dialog").showModal();
+};
+function closeTaskDialog() {
+    document.querySelector("#todo-dialog").close();
+};
+function openProjectDialog() {
+    document.querySelector("#project-dialog").showModal();
+};
+function closeProjectDialog() {
+    document.querySelector("#project-dialog").close();
 };
