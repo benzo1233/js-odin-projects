@@ -10,9 +10,9 @@ export function initTodos() {
     const openBtn = document.querySelector("#addTask")
     const closeBtn = document.querySelector("#closeBtn")
 
-    openBtn.addEventListener("click", () => {
-        dialog.showModal();
-    });
+    // openBtn.addEventListener("click", () => {
+    //     dialog.showModal();
+    // });
 
     closeBtn.addEventListener("click", () => {
         dialog.close();
@@ -81,3 +81,26 @@ export function addProjectTab(project) {
         renderProject(project);
     });
 }
+
+// NEW ===============================
+
+const sidebar = document.querySelector("#sidebar");
+
+sidebar.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) { return };
+
+    const action = actions[btn.dataset.action];
+
+    
+
+});
+
+const actions = { 
+    "addTask": openTaskDialog(),
+}
+
+function openTaskDialog() {
+    const dialog = document.querySelector("#todo-dialog");
+    dialog.showModal();
+};
