@@ -32,10 +32,7 @@ for (const project of projects) {
     }
 }
 
-// Initializes event listeners for dialog, adding todos & projects
-initTodoForm();
-initProjectForm();
-initSideBarHandler();
+appInit();
 
 
 

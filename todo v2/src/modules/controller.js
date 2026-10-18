@@ -32,6 +32,8 @@ function initTodoForm() {
         saveProjectLocally(getAllProjects());
 
         dialog.close();
+        form.reset();
+
     });
 }
 
@@ -56,6 +58,7 @@ function initProjectForm() {
         addProjectTab(newProject);
 
         dialog.close();
+        form.reset();
     });
 }
 
