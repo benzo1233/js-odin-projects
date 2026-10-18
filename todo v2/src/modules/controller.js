@@ -4,7 +4,13 @@ import { renderProject, createProjectTab } from './render.js'
 import { saveProjectLocally } from './localStorage.js'
 
 
-export function initTodos() {
+export function appInit() {
+    initTodoForm();
+    initProjectForm();
+    initSideBarHandler();
+}
+
+function initTodoForm() {
     const dialog = document.querySelector("#todo-dialog");
     const form = document.querySelector("#todo-form");
 
@@ -30,7 +36,7 @@ export function initTodos() {
 }
 
 
-export function initProject() {
+function initProjectForm() {
     const dialog = document.querySelector("#project-dialog");
     const form = document.querySelector("#project-form");
 
@@ -62,38 +68,36 @@ export function addProjectTab(project) {
     });
 }
 
-// NEW ===============================
+function initSideBarHandler() {
+    const sidebar = document.querySelector("#sidebar");
 
-const sidebar = document.querySelector("#sidebar");
+    sidebar.addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) { return };
+        const action = actions[btn.dataset.action];
 
-sidebar.addEventListener("click", (e) => {
-    const btn = e.target.closest("button");
-    if (!btn) { return };
-    // const action = actions[btn.dataset.action];
-    const action = actions[btn.dataset.action];
-    console.log(btn.dataset.action);
+        if (action) {
+            action();
+        }
+    });
 
-    if (action) {
-        action();
+    const actions = {
+        "openTaskDialog": openTaskDialog,
+        "closeTaskDialog": closeTaskDialog,
+        "openProjectDialog": openProjectDialog,
+        "closeProjectDialog": closeProjectDialog,
     }
-});
 
-const actions = { 
-    "openTaskDialog": openTaskDialog,
-    "closeTaskDialog": closeTaskDialog,
-    "openProjectDialog": openProjectDialog,
-    "closeProjectDialog": closeProjectDialog,
+    function openTaskDialog() {
+        document.querySelector("#todo-dialog").showModal();
+    };
+    function closeTaskDialog() {
+        document.querySelector("#todo-dialog").close();
+    };
+    function openProjectDialog() {
+        document.querySelector("#project-dialog").showModal();
+    };
+    function closeProjectDialog() {
+        document.querySelector("#project-dialog").close();
+    };
 }
-
-function openTaskDialog() {
-    document.querySelector("#todo-dialog").showModal();
-};
-function closeTaskDialog() {
-    document.querySelector("#todo-dialog").close();
-};
-function openProjectDialog() {
-    document.querySelector("#project-dialog").showModal();
-};
-function closeProjectDialog() {
-    document.querySelector("#project-dialog").close();
-};

@@ -1,7 +1,7 @@
 import { loadProjects, saveProjectLocally } from './localStorage.js'
 import { addProject, getAllProjects, setActiveProject, setProjects } from './state.js'
 import { renderProject } from './render.js'
-import { initTodos, initProject, addProjectTab } from './controller.js'
+import { appInit, addProjectTab} from './controller.js'
 import './controller.js'
 import '../styles.css'
 
@@ -33,8 +33,9 @@ for (const project of projects) {
 }
 
 // Initializes event listeners for dialog, adding todos & projects
-initTodos();
-initProject();
+initTodoForm();
+initProjectForm();
+initSideBarHandler();
 
 
 
