@@ -74,15 +74,23 @@ export function addProjectTab(project) {
 
 function initSideBarHandler() {
     const sidebar = document.querySelector("#sidebar");
-
+    const home = sidebar.children[3];
+    home.classList.add("active");
+    
     sidebar.addEventListener("click", (e) => {
         const btn = e.target.closest("button");
+
         if (!btn) { return };
         const action = actions[btn.dataset.action];
+        if (action) { action() };
 
-        if (action) {
-            action();
-        }
+        // showcase active projectTab
+        sidebar.querySelectorAll(".project-tab").forEach((bar) => {
+            bar.classList.remove("active");
+        });
+
+        const tab = e.target.closest(".project-tab");
+        tab.classList.add("active")
     });
 
     const actions = {

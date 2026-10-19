@@ -52,6 +52,7 @@ export function renderProject(project) {
 
 export function createProjectTab(project) {
     const projectTabBtn = document.createElement("button");
+    projectTabBtn.classList.add("project-tab")
     projectTabBtn.textContent = project.title || "Project";
     sidebar.appendChild(projectTabBtn);
 

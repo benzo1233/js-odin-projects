@@ -86,6 +86,9 @@ body {
 #sidebar {
   background-color: red;
   padding: 1rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
 }
 
 #container {
@@ -93,17 +96,10 @@ body {
   padding: 1rem;
 }
 
-
 #todo-form {
   display: flex;
   flex-direction: column;
   gap: .25rem;
-}
-
-#sidebar {
-  border: none;
-  display: flex;
-  flex-direction: column;
 }
 
 #myProjects {
@@ -113,11 +109,18 @@ body {
 }
 
 /* css toggles for todo details */
-
 .todo-details {
   display: none;
 }
 
 .todo.open .todo-details {
   display: block;
+}
+
+#sidebar button:hover {
+  background-color: red;
+}
+
+.active {
+  background-color: blue;
 }
