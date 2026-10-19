@@ -8,9 +8,11 @@ export function appInit() {
     initTodoForm();
     initProjectForm();
     initSideBarHandler();
+    initTodoDetailsHandler();
 }
 
 function initTodoForm() {
+    const container = document.querySelector("#container");
     const dialog = document.querySelector("#todo-dialog");
     const form = document.querySelector("#todo-form");
 
@@ -33,7 +35,6 @@ function initTodoForm() {
 
         dialog.close();
         form.reset();
-
     });
 }
 
@@ -103,4 +104,12 @@ function initSideBarHandler() {
     function closeProjectDialog() {
         document.querySelector("#project-dialog").close();
     };
+}
+
+function initTodoDetailsHandler() {
+    container.addEventListener('click', e => {
+        if (e.target.classList.contains('toggle')) {
+            e.target.closest('.todo').classList.toggle('open');
+        }
+    });
 }

@@ -41,12 +41,6 @@ function renderTodo(todo) {
 
 }
 
-container.addEventListener('click', e => {
-    if (e.target.classList.contains('toggle')) {
-        e.target.closest('.todo').classList.toggle('open');
-    }
-});
-
 export function renderProject(project) {
     console.log(project)
 
