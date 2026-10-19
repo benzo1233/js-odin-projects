@@ -9,7 +9,7 @@
 
 <body>
     <div id="sidebar">
-        <button id="addTask">Add Task [ + ]</button>
+        <button data-action="openTaskDialog">Add Task [ + ]</button>
         <dialog id="todo-dialog">
             <h2>Create To-Do</h2>
             <form id="todo-form">
@@ -33,14 +33,14 @@
                 <input type="text" id="notes" placeholder="Notes" name="notes" required>
 
                 <button type="submit">Submit</button>
-                <button type="button" id="closeBtn">Cancel</button>
+                <button type="button" data-action="closeTaskDialog">Cancel</button>
             </form>
         </dialog>
 
         <div id="myProjects">
             <button>My Projects</button>
 
-            <button id="addProject">[ + ]</button>
+            <button data-action="openProjectDialog">[ + ]</button>
             <dialog id="project-dialog">
                 <h2>Add Project</h2>
                 <form id="project-form">
@@ -51,7 +51,7 @@
                     <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
 
                     <button type="submit">Submit</button>
-                    <button type="button" id="projectCloseBtn">Cancel</button>
+                    <button type="button" data-action="closeProjectDialog">Cancel</button>
                 </form>
             </dialog>
         </div>

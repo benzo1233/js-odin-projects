@@ -6,16 +6,6 @@ const sidebar = document.querySelector("#sidebar");
 function renderTodo(todo) {
     console.log(todo);
 
-    // const todoElement = document.createElement('p');
-    // todoElement.textContent =
-    //     `${todo.title} 
-    //     - ${todo.description} 
-    //     - Due: ${format(parseISO(todo.dueDate), "MMM dd, yyyy h:mm a")} 
-    //     - Priority: ${todo.priority}
-    //     - Notes: ${todo.notes}`;
-
-    // container.appendChild(todoElement);
-
     const div = document.createElement("div");
     div.className = 'todo';
 
@@ -50,12 +40,6 @@ function renderTodo(todo) {
     container.append(div);
 
 }
-
-container.addEventListener('click', e => {
-    if (e.target.classList.contains('toggle')) {
-        e.target.closest('.todo').classList.toggle('open');
-    }
-});
 
 export function renderProject(project) {
     console.log(project)
