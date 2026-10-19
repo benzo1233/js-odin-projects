@@ -84,7 +84,7 @@ body {
 }
 
 #sidebar {
-  background-color: red;
+  background-color: lightcoral;
   padding: 1rem;
   border: none;
   display: flex;
@@ -118,9 +118,9 @@ body {
 }
 
 #sidebar button:hover {
-  background-color: red;
+  background-color: grey;
 }
 
 .active {
-  background-color: blue;
+  background-color: rgba(255, 166, 0, 0.836);
 }

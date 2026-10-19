@@ -85,11 +85,12 @@ function initSideBarHandler() {
         if (action) { action() };
 
         // showcase active projectTab
+        const tab = e.target.closest(".project-tab");
+        if (!tab) return;
         sidebar.querySelectorAll(".project-tab").forEach((bar) => {
             bar.classList.remove("active");
         });
 
-        const tab = e.target.closest(".project-tab");
         tab.classList.add("active")
     });
 
