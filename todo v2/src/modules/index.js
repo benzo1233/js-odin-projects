@@ -1,23 +1,41 @@
-// Index.js
-// import { createToDo } from './createItem.js'
-import { addItemToView } from './dom.js'
-import { loadTodos } from './localStorage.js'
-import { initDialog } from './dialog.js'
-import './dialog.js'
+import { loadProjects, saveProjectLocally } from './localStorage.js'
+import { addProject, getAllProjects, setActiveProject, setProjects } from './state.js'
+import { renderProject } from './render.js'
+import { appInit, addProjectTab} from './controller.js'
+import './controller.js'
 import '../styles.css'
 
-let todos = loadTodos();
-todos.forEach(addItemToView);   // render what's already saved
+import { createProject } from './factories.js'
 
-initDialog(todos);
-// const item = createToDo("Gym", "Leg Day", "tomorrow", 5, "Hit glutes, hams, quads");
-// const button = document.querySelector("#addTask");
+// Retrieves data from LocalStor -> Rebuild State
+let projects = loadProjects();
+setProjects(projects);
 
-// button.addEventListener("click", (e) => {
-//     todos.push(item);
-//     saveTodos(todos);
-//     addItemToView(item);
-// });
+// Hardcoded Default Pg
+let home = projects.find(project => project.id === "Home");
+
+if (!home) {
+    home = createProject("Home", "Default Todo");
+    home.id = "Home";        // override the random UUID with our fixed id
+    addProject(home);          // only register it in state.js when it's new
+    saveProjectLocally(getAllProjects());
+}
+
+addProjectTab(home);
+setActiveProject(home.id);
+renderProject(home);
+
+// Reload all tabs
+for (const project of projects) {
+    if (project.id !== "Home") {
+        addProjectTab(project);
+    }
+}
+
+appInit();
+
+
+
 
 
 

@@ -9,11 +9,10 @@
 
 <body>
     <div id="sidebar">
-        <button id="addTask">Add Task [ + ]</button>
+        <button data-action="openTaskDialog">Add Task [ + ]</button>
         <dialog id="todo-dialog">
             <h2>Create To-Do</h2>
             <form id="todo-form">
-                <!-- // Title, Description, dueDate, Priority (1-5?), notes/checklist -->
                 <label for="title"></label>
                 <input type="text" id="title" placeholder="Enter a title" name="title" required>
 
@@ -25,7 +24,8 @@
 
                 <div>
                     <label for="priority">Priority: </label>
-                    <input type="number" id="priority" placeholder="Select Priority" min="1" max="3" step="1" value="1"  name="priority"required>
+                    <input type="number" id="priority" placeholder="Select Priority" min="1" max="3" step="1" value="1"
+                        name="priority" required>
 
                 </div>
 
@@ -33,11 +33,28 @@
                 <input type="text" id="notes" placeholder="Notes" name="notes" required>
 
                 <button type="submit">Submit</button>
-                <button type="button" id="closeBtn">Cancel</button>
+                <button type="button" data-action="closeTaskDialog">Cancel</button>
             </form>
         </dialog>
 
-        <button id="addProject">Add Projects [ + ]</button>
+        <div id="myProjects">
+            <button>My Projects</button>
+
+            <button data-action="openProjectDialog">[ + ]</button>
+            <dialog id="project-dialog">
+                <h2>Add Project</h2>
+                <form id="project-form">
+                    <label for="projectName"></label>
+                    <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
+
+                    <label for="projectDescription"></label>
+                    <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
+
+                    <button type="submit">Submit</button>
+                    <button type="button" data-action="closeProjectDialog">Cancel</button>
+                </form>
+            </dialog>
+        </div>
 
     </div>
 
