@@ -12,7 +12,6 @@ export function appInit() {
 }
 
 function initTodoForm() {
-    const container = document.querySelector("#container");
     const dialog = document.querySelector("#todo-dialog");
     const form = document.querySelector("#todo-form");
 
@@ -70,12 +69,11 @@ export function addProjectTab(project) {
         setActiveProject(project.id);
         renderProject(project);
     });
+    return tab;
 }
 
 function initSideBarHandler() {
     const sidebar = document.querySelector("#sidebar");
-    const home = sidebar.children[3];
-    home.classList.add("active");
     
     sidebar.addEventListener("click", (e) => {
         const btn = e.target.closest("button");

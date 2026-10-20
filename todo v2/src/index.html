@@ -10,8 +10,9 @@
 <body>
     <div id="sidebar">
 
-        <button class="tab" data-action="openTaskDialog"> <svg viewBox="0 0 24.00 24.00" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+        <button class="tab" data-action="openTaskDialog">
+            Add Task
+            <svg viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
@@ -22,7 +23,6 @@
                     </g>
                 </g>
             </svg>
-            Add Task
         </button>
         <dialog id="todo-dialog">
             <h2>Create To-Do</h2>
@@ -52,9 +52,8 @@
         </dialog>
 
         <div class="tab" id="myProjects">
-            <button>My Projects</button>
-
             <button class="tab" data-action="openProjectDialog">
+                My Projects
                 <svg viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -66,26 +65,27 @@
                             </path>
                         </g>
                     </g>
-                </svg> </button>
-            <dialog id="project-dialog">
-                <h2>Add Project</h2>
-                <form id="project-form">
-                    <label for="projectName"></label>
-                    <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
-
-                    <label for="projectDescription"></label>
-                    <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
-
-                    <button type="submit">Submit</button>
-                    <button type="button" data-action="closeProjectDialog">Cancel</button>
-                </form>
-            </dialog>
+                </svg>
+            </button>
         </div>
+
+        <dialog id="project-dialog">
+            <h2>Add Project</h2>
+            <form id="project-form">
+                <label for="projectName"></label>
+                <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
+
+                <label for="projectDescription"></label>
+                <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
+
+                <button type="submit">Submit</button>
+                <button type="button" data-action="closeProjectDialog">Cancel</button>
+            </form>
+        </dialog>
 
     </div>
 
     <div id="container">
-
     </div>
 </body>
 

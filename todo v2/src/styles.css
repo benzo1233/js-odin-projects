@@ -3,6 +3,7 @@
   --container-bg-color: white;
   --sidebar-bg-color: #FCFAF8;
   --text-color: black;
+  --secondary-text-color: rgba(0, 0, 0, 0.615);
 
   --tab-active: #ffc198;
   --tab-hover: #9b9896;
@@ -87,7 +88,7 @@ h6 {
   isolation: isolate;
 }
 
-/* MY STYLES */
+/*BODY & SIDEBAR*/
 
 body {
   display: grid;
@@ -116,29 +117,35 @@ body {
   background-color: var(--tab-hover);
 }
 
+/* TODO STYLES */
+.todo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  padding: 1rem 0rem 0rem 3rem;
+}
+
 #todo-form {
   display: flex;
   flex-direction: column;
   gap: .25rem;
 }
 
-/* css toggles for todo details */
+/* Details dropdown Toggle */
 .todo-details {
   display: none;
 }
 
 .todo.open .todo-details {
   display: block;
+  padding-left: 2rem;
 }
 
-.active {
-  background-color: var(--tab-active);
-}
-
-#myProjects {
+/* Projects Section */
+.project-header {
+  height: 50px;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  align-items: center;
 }
 
 #container {
@@ -146,13 +153,40 @@ body {
   padding: 1rem;
 }
 
-svg {
-  width: 30px;
-  height: 30px;
+#myProjects {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  width: 100%;
 }
+
 
 .tab {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+}
+
+/* Shows Active Tab */
+.active {
+  background-color: var(--tab-active);
+}
+
+/* Misc */
+
+svg {
+  width: 25px;
+  height: 25px;
+}
+
+.description {
+  color: var(--secondary-text-color);
+}
+
+.toggle {
+  border: none;
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
 }
