@@ -12,7 +12,6 @@ export function appInit() {
 }
 
 function initTodoForm() {
-    const container = document.querySelector("#container");
     const dialog = document.querySelector("#todo-dialog");
     const form = document.querySelector("#todo-form");
 
@@ -70,19 +69,27 @@ export function addProjectTab(project) {
         setActiveProject(project.id);
         renderProject(project);
     });
+    return tab;
 }
 
 function initSideBarHandler() {
     const sidebar = document.querySelector("#sidebar");
-
+    
     sidebar.addEventListener("click", (e) => {
         const btn = e.target.closest("button");
+
         if (!btn) { return };
         const action = actions[btn.dataset.action];
+        if (action) { action() };
 
-        if (action) {
-            action();
-        }
+        // showcase active projectTab
+        const tab = e.target.closest(".project-tab");
+        if (!tab) return;
+        sidebar.querySelectorAll(".project-tab").forEach((bar) => {
+            bar.classList.remove("active");
+        });
+
+        tab.classList.add("active")
     });
 
     const actions = {
@@ -107,9 +114,10 @@ function initSideBarHandler() {
 }
 
 function initTodoDetailsHandler() {
+    const container = document.querySelector("#container");
     container.addEventListener('click', e => {
         if (e.target.classList.contains('toggle')) {
-            e.target.closest('.todo').classList.toggle('open');
+            e.target.closest('.todoItem').classList.toggle('open');
         }
     });
 }

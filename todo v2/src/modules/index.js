@@ -4,7 +4,6 @@ import { renderProject } from './render.js'
 import { appInit, addProjectTab} from './controller.js'
 import './controller.js'
 import '../styles.css'
-
 import { createProject } from './factories.js'
 
 // Retrieves data from LocalStor -> Rebuild State
@@ -21,7 +20,8 @@ if (!home) {
     saveProjectLocally(getAllProjects());
 }
 
-addProjectTab(home);
+const homeTab = addProjectTab(home);
+homeTab.classList.add("active");
 setActiveProject(home.id);
 renderProject(home);
 

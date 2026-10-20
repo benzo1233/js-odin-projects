@@ -1,3 +1,16 @@
+:root {
+  /* Colors */
+  --container-bg-color: white;
+  --sidebar-bg-color: #FCFAF8;
+  --text-color: black;
+  --secondary-text-color: rgba(0, 0, 0, 0.615);
+
+  --tab-active: #ffc198;
+  --tab-hover: #9b9896;
+
+
+}
+
 /* 1. Use a more-intuitive box-sizing model */
 *,
 *::before,
@@ -75,49 +88,128 @@ h6 {
   isolation: isolate;
 }
 
-/* MY STYLES */
+/*BODY & SIDEBAR*/
 
 body {
   display: grid;
   grid-template-columns: 2fr 8fr;
-  padding: 1rem;
 }
 
 #sidebar {
-  background-color: red;
+  background-color: var(--sidebar-bg-color);
+  gap: 0 1rem;
   padding: 1rem;
-}
-
-#container {
-  background-color: yellow;
-  padding: 1rem;
-}
-
-
-#todo-form {
-  display: flex;
-  flex-direction: column;
-  gap: .25rem;
-}
-
-#sidebar {
   border: none;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
-#myProjects {
+#sidebar button {
+  border-radius: 4px;
+  border-style: none;
+  height: 50px;
+  width: 100%;
+  text-align: start;
+}
+
+#sidebar button:hover {
+  background-color: var(--tab-hover);
+}
+
+/* Styling for Project Tabs with Icons */
+.icon-tab {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* css toggles for todo details */
+/* Shows Active Tab */
+.active {
+  background-color: var(--tab-active);
+}
 
+/* TODO STYLES */
+.todoItem {
+  display: grid;
+  grid-template-columns: 1fr 4fr 12fr;
+  grid-template-rows: 1fr 1fr;
+  justify-content: space-between;
+  /* padding: 1rem 0rem 0rem 3rem; */
+}
+
+.todo-details {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.todo-check {
+  height: 20px;
+  width: 20px;
+  align-self: center;
+  justify-self: center;
+}
+
+/* Dialog  */
+dialog {
+  border: none;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+dialog button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px !important;
+}
+
+/* form */
+#todo-form,
+#project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+
+/* Details dropdown Toggle */
 .todo-details {
   display: none;
 }
 
-.todo.open .todo-details {
+.todoItem.open .todo-details {
   display: block;
+  padding-left: 2rem;
+}
+
+/* Projects Section */
+#container {
+  background-color: var(--container-bg-color);
+  padding: 1rem;
+}
+
+.project-header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+/* Misc */
+
+svg {
+  width: 25px;
+  height: 25px;
+}
+
+.description {
+  color: var(--secondary-text-color);
+}
+
+.toggle {
+  border: none;
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
 }

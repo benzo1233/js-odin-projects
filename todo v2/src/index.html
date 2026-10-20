@@ -9,7 +9,22 @@
 
 <body>
     <div id="sidebar">
-        <button data-action="openTaskDialog">Add Task [ + ]</button>
+        <!-- TODO TAB -->
+        <button class="icon-tab" data-action="openTaskDialog">
+            Add Task
+            <svg viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <g id="Edit / Add_Plus_Circle">
+                        <path id="Vector"
+                            d="M8 12H12M12 12H16M12 12V16M12 12V8M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                            stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </g>
+            </svg>
+        </button>
+
         <dialog id="todo-dialog">
             <h2>Create To-Do</h2>
             <form id="todo-form">
@@ -26,7 +41,6 @@
                     <label for="priority">Priority: </label>
                     <input type="number" id="priority" placeholder="Select Priority" min="1" max="3" step="1" value="1"
                         name="priority" required>
-
                 </div>
 
                 <label for="notes"></label>
@@ -37,30 +51,41 @@
             </form>
         </dialog>
 
-        <div id="myProjects">
-            <button>My Projects</button>
+        <!-- MY PROJECTS TAB -->
+        <button class="icon-tab" data-action="openProjectDialog" style="margin-top: 1rem;">
+            My Projects
+            <svg viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <g id="Edit / Add_Plus_Circle">
+                        <path id="Vector"
+                            d="M8 12H12M12 12H16M12 12V16M12 12V8M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                            stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                    </g>
+                </g>
+            </svg>
+        </button>
 
-            <button data-action="openProjectDialog">[ + ]</button>
-            <dialog id="project-dialog">
-                <h2>Add Project</h2>
-                <form id="project-form">
-                    <label for="projectName"></label>
-                    <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
+        <dialog id="project-dialog">
+            <h2>Add Project</h2>
+            <form id="project-form">
+                <label for="projectName"></label>
+                <input type="text" id="projectName" name="projectName" placeholder="Add Project Title" required>
 
-                    <label for="projectDescription"></label>
-                    <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
+                <label for="projectDescription"></label>
+                <input type="text" id="projectName" name="projectDescription" placeholder="Add Project Description">
 
-                    <button type="submit">Submit</button>
-                    <button type="button" data-action="closeProjectDialog">Cancel</button>
-                </form>
-            </dialog>
-        </div>
+                <button type="submit">Submit</button>
+                <button type="button" data-action="closeProjectDialog">Cancel</button>
+            </form>
+        </dialog>
 
     </div>
 
-    <div id="container">
-
-    </div>
+    <!-- MAIN CONTENT -> TODO ITEMS  -->
+    <div id="container"></div>
 </body>
 
 </html>
