@@ -119,5 +119,14 @@ function initTodoDetailsHandler() {
         if (e.target.classList.contains('toggle')) {
             e.target.closest('.todoItem').classList.toggle('open');
         }
+        const check = e.target.closest('.todo-check');
+        if (check) {
+            const project = getProject(getActiveProjectId());
+            let todo = project.todos.find(todo => todo.id === check.dataset.todoId);
+
+            if (!todo) { return }
+            todo.completed = todo.completed ? false : true;
+            saveProjectLocally(getAllProjects());
+        }
     });
 }
