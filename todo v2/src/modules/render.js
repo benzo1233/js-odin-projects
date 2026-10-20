@@ -7,7 +7,7 @@ function createTodo(todo) {
     console.log(todo);
 
     const todoElement = document.createElement("div");
-    todoElement.className = 'todo';
+    todoElement.className = 'todoItem';
 
     //Header
     const header = document.createElement("div");
@@ -58,7 +58,7 @@ export function renderProject(project) {
     header.textContent = "myProjects / " + project.title;
     header.classList.add("project-header");
     container.append(header);
-    
+
     for (const todo of project.todos) {
         container.append(createTodo(todo));
     }

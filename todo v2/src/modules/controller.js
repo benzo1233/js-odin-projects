@@ -116,7 +116,7 @@ function initSideBarHandler() {
 function initTodoDetailsHandler() {
     container.addEventListener('click', e => {
         if (e.target.classList.contains('toggle')) {
-            e.target.closest('.todo').classList.toggle('open');
+            e.target.closest('.todoItem').classList.toggle('open');
         }
     });
 }

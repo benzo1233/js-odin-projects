@@ -117,19 +117,49 @@ body {
   background-color: var(--tab-hover);
 }
 
+/* Styling for Project Tabs with Icons */
+.icon-tab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Shows Active Tab */
+.active {
+  background-color: var(--tab-active);
+}
+
 /* TODO STYLES */
-.todo {
+.todoItem {
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: space-between;
   padding: 1rem 0rem 0rem 3rem;
 }
 
-#todo-form {
+/* Dialog  */
+dialog {
+  border: none;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+dialog button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px !important;
+}
+
+/* form */
+#todo-form,
+#project-form {
   display: flex;
   flex-direction: column;
-  gap: .25rem;
+  gap: 0.25rem;
 }
+
 
 /* Details dropdown Toggle */
 .todo-details {
@@ -142,27 +172,15 @@ body {
 }
 
 /* Projects Section */
-.project-header {
-  height: 50px;
-  display: flex;
-  align-items: center;
-}
-
 #container {
   background-color: var(--container-bg-color);
   padding: 1rem;
 }
 
-.icon-tab {
+.project-header {
+  height: 50px;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-}
-
-/* Shows Active Tab */
-.active {
-  background-color: var(--tab-active);
 }
 
 /* Misc */
