@@ -9,13 +9,13 @@ function createTodo(todo) {
     const todoElement = document.createElement("div");
     todoElement.className = 'todoItem';
 
-    // TEST
+    // todoItem CheckBox 
     const check = document.createElement("input");
-    check.type = "checkbox";          // use "radio" only for pick-one groups
+    check.type = "checkbox";          
     check.className = "todo-check";
     check.checked = todo.completed;
 
-    //Header
+    // Header
     const header = document.createElement("div");
 
     const title = document.createElement("h2");
@@ -27,7 +27,7 @@ function createTodo(todo) {
 
     header.append(title, description);
 
-    //Button
+    // Toggle Btn
     const btn = document.createElement("button");
     btn.className = 'toggle';
     btn.textContent = '▼';
@@ -47,6 +47,7 @@ function createTodo(todo) {
     const notes = document.createElement("p");
     notes.textContent = `Notes: ${todo.notes}`;
 
+    // Append Content
     details.append(dueDate, priority, notes);
     todoElement.append(details);
 
