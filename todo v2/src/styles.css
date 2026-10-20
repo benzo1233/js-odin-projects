@@ -166,7 +166,7 @@ dialog button {
   display: none;
 }
 
-.todo.open .todo-details {
+.todoItem.open .todo-details {
   display: block;
   padding-left: 2rem;
 }

@@ -114,6 +114,7 @@ function initSideBarHandler() {
 }
 
 function initTodoDetailsHandler() {
+    const container = document.querySelector("#container");
     container.addEventListener('click', e => {
         if (e.target.classList.contains('toggle')) {
             e.target.closest('.todoItem').classList.toggle('open');
