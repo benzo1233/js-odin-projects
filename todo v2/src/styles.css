@@ -1,3 +1,15 @@
+:root {
+  /* Colors */
+  --container-bg-color: white;
+  --sidebar-bg-color: #FCFAF8;
+  --text-color: black;
+
+  --tab-active: #ffc198;
+  --tab-hover: #9b9896;
+
+
+}
+
 /* 1. Use a more-intuitive box-sizing model */
 *,
 *::before,
@@ -80,32 +92,34 @@ h6 {
 body {
   display: grid;
   grid-template-columns: 2fr 8fr;
-  padding: 1rem;
 }
 
 #sidebar {
-  background-color: lightcoral;
+  background-color: var(--sidebar-bg-color);
+  gap: 0 1rem;
   padding: 1rem;
   border: none;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
-#container {
-  background-color: yellow;
-  padding: 1rem;
+#sidebar button {
+  border-radius: 4px;
+  border-style: none;
+  height: 50px;
+  width: 100%;
+  text-align: start;
+}
+
+#sidebar button:hover {
+  background-color: var(--tab-hover);
 }
 
 #todo-form {
   display: flex;
   flex-direction: column;
   gap: .25rem;
-}
-
-#myProjects {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 
 /* css toggles for todo details */
@@ -117,10 +131,28 @@ body {
   display: block;
 }
 
-#sidebar button:hover {
-  background-color: grey;
+.active {
+  background-color: var(--tab-active);
 }
 
-.active {
-  background-color: rgba(255, 166, 0, 0.836);
+#myProjects {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#container {
+  background-color: var(--container-bg-color);
+  padding: 1rem;
+}
+
+svg {
+  width: 30px;
+  height: 30px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
