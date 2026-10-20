@@ -9,6 +9,12 @@ function createTodo(todo) {
     const todoElement = document.createElement("div");
     todoElement.className = 'todoItem';
 
+    // TEST
+    const check = document.createElement("input");
+    check.type = "checkbox";          // use "radio" only for pick-one groups
+    check.className = "todo-check";
+    check.checked = todo.completed;
+
     //Header
     const header = document.createElement("div");
 
@@ -19,14 +25,14 @@ function createTodo(todo) {
     description.classList.add("description");
     description.textContent = todo.description;
 
-    header.append(title,description);
+    header.append(title, description);
 
     //Button
     const btn = document.createElement("button");
     btn.className = 'toggle';
     btn.textContent = '▼';
-    
-    todoElement.append(header, btn);
+
+    todoElement.append(check, header, btn);
 
     // Details popdown
     const details = document.createElement("div");
@@ -52,7 +58,7 @@ export function renderProject(project) {
     console.log(project)
 
     container.innerHTML = '';
-    
+
     // Create Header to show what project we r on
     const header = document.createElement("div");
     header.textContent = "myProjects / " + project.title;

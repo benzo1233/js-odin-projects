@@ -133,9 +133,22 @@ body {
 /* TODO STYLES */
 .todoItem {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 4fr 12fr;
+  grid-template-rows: 1fr 1fr;
   justify-content: space-between;
-  padding: 1rem 0rem 0rem 3rem;
+  /* padding: 1rem 0rem 0rem 3rem; */
+}
+
+.todo-details {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.todo-check {
+  height: 20px;
+  width: 20px;
+  align-self: center;
+  justify-self: center;
 }
 
 /* Dialog  */
