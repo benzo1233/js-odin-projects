@@ -1,4 +1,4 @@
-import { addProject, getProject, getAllProjects, getActiveProjectId, setActiveProject } from './state.js'
+import { addProject, getProject, getAllProjects, getActiveProjectId, setActiveProject, removeTodo } from './state.js'
 import { createTodo, createProject } from './factories.js'
 import { renderProject, createProjectTab } from './render.js'
 import { saveProjectLocally } from './localStorage.js'
@@ -74,7 +74,7 @@ export function addProjectTab(project) {
 
 function initSideBarHandler() {
     const sidebar = document.querySelector("#sidebar");
-    
+
     sidebar.addEventListener("click", (e) => {
         const btn = e.target.closest("button");
 
@@ -118,6 +118,14 @@ function initTodoDetailsHandler() {
     container.addEventListener('click', e => {
         if (e.target.classList.contains('toggle')) {
             e.target.closest('.todoItem').classList.toggle('open');
+        }
+
+        if (e.target.classList.contains('delete')) {
+            const item = e.target.closest('.todoItem').dataset.todoId;
+            removeTodo(getActiveProjectId() ,item);
+            saveProjectLocally(getAllProjects());
+            renderProject(getActiveProjectId());
+
         }
         const check = e.target.closest('.todo-check');
         if (check) {
