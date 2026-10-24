@@ -83,13 +83,13 @@ function initSideBarHandler() {
         if (action) { action() };
 
         // showcase active projectTab
-        const tab = e.target.closest(".project-tab");
-        if (!tab) return;
-        sidebar.querySelectorAll(".project-tab").forEach((bar) => {
-            bar.classList.remove("active");
+        const clickedTab = e.target.closest(".project-tab");
+        if (!clickedTab) return;
+        sidebar.querySelectorAll(".project-tab").forEach((projectTab) => {
+            projectTab.classList.remove("active");
         });
 
-        tab.classList.add("active")
+        clickedTab.classList.add("active")
     });
 
     const actions = {
@@ -116,24 +116,26 @@ function initSideBarHandler() {
 function initTodoDetailsHandler() {
     const container = document.querySelector("#container");
     container.addEventListener('click', e => {
-        if (e.target.classList.contains('toggle')) {
+        const targetClass = e.target.classlist;
+        if (targetClass.contains('toggle')) {
             e.target.closest('.todoItem').classList.toggle('open');
         }
 
-        if (e.target.classList.contains('delete')) {
-            const item = e.target.closest('.todoItem').dataset.todoId;
-            removeTodo(getActiveProjectId() ,item);
+        if (targetClass.contains('delete')) {
+            const todoId = e.target.closest('.todoItem').dataset.todoId;
+            removeTodo(getActiveProjectId() ,todoId);
             saveProjectLocally(getAllProjects());
             renderProject(getActiveProjectId());
 
         }
-        const check = e.target.closest('.todo-check');
-        if (check) {
-            const project = getProject(getActiveProjectId());
-            let todo = project.todos.find(todo => todo.id === check.dataset.todoId);
 
-            if (!todo) { return }
-            todo.completed = todo.completed ? false : true;
+        if (targetClass.contains("todo-check")) {
+            const todoId = e.target.closest('.todoItem').dataset.todoId;
+            const project = getProject(getActiveProjectId());
+            const matchedTodo = project.todos.find(todo => todo.id === todoId);
+
+            if (!matchedTodo) { return }
+            matchedTodo.completed = matchedTodo.completed ? false : true;
             saveProjectLocally(getAllProjects());
         }
     });
