@@ -117,19 +117,20 @@ function initTodoDetailsHandler() {
     const container = document.querySelector("#container");
     container.addEventListener('click', e => {
         const targetClass = e.target.classlist;
-        if (targetClass.contains('toggle')) {
+        if (e.target.classList.contains('toggle')) {
             e.target.closest('.todoItem').classList.toggle('open');
         }
 
-        if (targetClass.contains('delete')) {
+        if (e.target.classList.contains('delete')) {
             const todoId = e.target.closest('.todoItem').dataset.todoId;
-            removeTodo(getActiveProjectId() ,todoId);
+            removeTodo(getActiveProjectId(), todoId);
             saveProjectLocally(getAllProjects());
-            renderProject(getActiveProjectId());
+            const projectId = getActiveProjectId();
+            renderProject(getProject(projectId));
 
         }
 
-        if (targetClass.contains("todo-check")) {
+        if (e.target.classList.contains("todo-check")) {
             const todoId = e.target.closest('.todoItem').dataset.todoId;
             const project = getProject(getActiveProjectId());
             const matchedTodo = project.todos.find(todo => todo.id === todoId);
@@ -137,6 +138,7 @@ function initTodoDetailsHandler() {
             if (!matchedTodo) { return }
             matchedTodo.completed = matchedTodo.completed ? false : true;
             saveProjectLocally(getAllProjects());
+            renderProject(project);
         }
     });
 }

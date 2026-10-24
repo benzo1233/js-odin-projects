@@ -15,7 +15,6 @@ function createTodo(todo) {
     const check = document.createElement("input");
     check.type = "checkbox";
     check.className = "todo-check";
-    // check.dataset.todoId = todo.id;
     check.checked = todo.completed;
 
     // Header
