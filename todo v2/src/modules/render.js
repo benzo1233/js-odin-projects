@@ -8,12 +8,13 @@ function createTodo(todo) {
 
     const todoElement = document.createElement("div");
     todoElement.className = 'todoItem';
+    todoElement.dataset.todoId = todo.id;
+
 
     // todoItem CheckBox 
     const check = document.createElement("input");
-    check.type = "checkbox";          
+    check.type = "checkbox";
     check.className = "todo-check";
-    check.dataset.todoId = todo.id;
     check.checked = todo.completed;
 
     // Header
@@ -28,12 +29,21 @@ function createTodo(todo) {
 
     header.append(title, description);
 
-    // Toggle Btn
-    const btn = document.createElement("button");
-    btn.className = 'toggle';
-    btn.textContent = '▼';
+    // Delete Btn
+    const containerBtn = document.createElement("div");
+    containerBtn.classList.add("containerBtn");
 
-    todoElement.append(check, header, btn);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = 'delete';
+    deleteBtn.textContent = "🗑️";
+
+    // Toggle Btn
+    const toggleBtn = document.createElement("button");
+    toggleBtn.className = 'toggle';
+    toggleBtn.textContent = '▼';
+
+    containerBtn.append(deleteBtn, toggleBtn);
+    todoElement.append(check, header, containerBtn);
 
     // Details popdown
     const details = document.createElement("div");
@@ -67,6 +77,7 @@ export function renderProject(project) {
     header.classList.add("project-header");
     container.append(header);
 
+    if (!project.todos) { return }
     for (const todo of project.todos) {
         container.append(createTodo(todo));
     }
