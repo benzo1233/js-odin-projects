@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input:valid {
+            border-color: orange;
+        }
+
+        input:invalid {
+            border-color: red;
+        }
+
+        .error {
+            width: 100%;
+            display: none;
+
+            font-size: 80%;
+            color: white;
+            background-color: #990000;
+            border-radius: 0 0 5px 5px;
+
+            box-sizing: border-box;
+        }
+
+        .error.active {
+            padding: 0.3em;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form" action="" novalidate>
+        <label for="">Email</label>
+        <input type="email" id="mail" name="mail" required minlength="8" />
+        <span class="error" aria-live="polite"></span>
+
+        <label for="">Country</label>
+        <input type="text" id="country" name="country" required pattern="[A-Za-z\s\-]+" />
+        <span class="error" aria-live="polite"></span>
+
+        <label for="">Postal Code</label>
+        <input type="text" id="postal" name="postal" required pattern="\d{5}" />
+        <span class="error" aria-live="polite"></span>
+
+        <label for="">Password</label>
+        <input type="password" id="pswd" name="pswd" required minlength="8" />
+        <span class="error" aria-live="polite"></span>
+
+        <label for="">Confirm Password</label>
+        <input type="password" id="pswdConfirm" name="pswdConfirm" required minlength="8" />
+        <span class="error" aria-live="polite"></span>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // TODO
+        // 1) email validation for @ and gmail.com
+        // 2) postal code is 5 digits
+        // 3) ensure pswd has one special character and longer than length 8
+        // 4) ensure passwords match
+        const email = document.querySelector("#mail");
+        const emailError = document.querySelector("#mail + span.error");
+
+        const country = document.querySelector("#country");
+        const countryError = document.querySelector("#country + span.error");
+
+        const postal = document.querySelector("#postal");
+        const postalError = document.querySelector("#postal + span.error");
+
+        const pswd = document.querySelector("#pswd");
+        const pswdError = document.querySelector("#pswd + span.error");
+
+        const pswdConfirm = document.querySelector("#pswdConfirm");
+        const pswdConfirmError = document.querySelector(
+            "#pswdConfirm + span.error",
+        );
+
+        email.addEventListener("input", () => {
+            if (email.validity.valid) {
+                emailError.textContent = "";
+                emailError.className = "error";
+            } else {
+                showEmailError();
+            }
+        });
+
+        country.addEventListener("input", () => {
+            if (country.validity.valid) {
+                countryError.textContent = "";
+                countryError.className = "error";
+            } else {
+                showCountryError();
+            }
+        });
+
+        postal.addEventListener("input", () => {
+            if (postal.validity.valid) {
+                postalError.textContent = "";
+                postalError.className = "error";
+            } else {
+                showPostalError();
+            }
+        });
+
+        pswd.addEventListener("input", () => {
+            if (pswd.validity.valid) {
+                pswdError.textContent = "";
+                pswdError.className = "error";
+            } else {
+                showPswdError();
+            }
+        });
+
+        pswdConfirm.addEventListener("input", () => {
+            if (pswdConfirm.validity.valid && pswd.value === pswdConfirm.value) {
+                pswdConfirmError.textContent = "";
+                pswdConfirmError.className = "error";
+            } else {
+                showPswdConfirmError(pswd.value);
+            }
+        });
+
+        //FUNCS
+
+        function showEmailError() {
+            if (email.validity.valueMissing) {
+                emailError.textContent = "You need to enter an email address.";
+            } else if (email.validity.typeMismatch) {
+                emailError.textContent =
+                    "Entered value needs to be an email address.";
+            } else if (email.validity.tooShort) {
+                emailError.textContent = `Email should be at least ${email.minLength} characters; you entered ${email.value.length}.`;
+            }
+            emailError.className = "error active";
+        }
+
+        function showCountryError() {
+            if (country.validity.valueMissing) {
+                countryError.textContent = "You need to enter an Country.";
+            } else if (country.validity.patternMismatch) {
+                countryError.textContent = "Can only have letters";
+            }
+            countryError.className = "error active";
+        }
+
+        function showPostalError() {
+            if (postal.validity.valueMissing) {
+                postalError.textContent = "You need to enter an Postal Code.";
+            } else if (postal.validity.patternMismatch) {
+                postalError.textContent = "Must be 5 numeric digits";
+            }
+            postalError.className = "error active";
+        }
+
+        function showPswdError() {
+            if (pswd.validity.valueMissing) {
+                pswdError.textContent = "You need to enter an Pswd Code.";
+            } else if (pswd.value.length < 8) {
+                pswdError.textContent = "Need min length of 8";
+            }
+            pswdError.className = "error active";
+        }
+
+        function showPswdConfirmError(pswd_val) {
+            if (pswdConfirm.validity.valueMissing) {
+                pswdConfirmError.textContent =
+                    "You need to enter a confirm Pswd Code.";
+            } else if (pswd.value.length < 8) {
+                pswdConfirmError.textContent = "Need min length of 8";
+            } else if (pswd_val !== pswdConfirm.value) {
+                pswdConfirmError.textContent = "PASSWORDS DO NOT MATCH";
+            }
+            pswdConfirmError.className = "error active";
+        }
+
+        const form = document.querySelector(".form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            // Typically want to showError Here as well.
+        });
+    </script>
+</body>
+
+</html>

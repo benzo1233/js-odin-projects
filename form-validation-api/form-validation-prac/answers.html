@@ -1,0 +1,202 @@
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Validation</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-width: 400px;
+      }
+
+      input {
+        padding: 0.6rem;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input:valid {
+        border-color: green;
+      }
+
+      input:invalid {
+        border-color: red;
+      }
+
+      .error {
+        display: none;
+        color: #990000;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .error.active {
+        display: block;
+      }
+
+      button {
+        padding: 0.7rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form class="form" novalidate>
+      <label for="mail">Email</label>
+      <input
+        type="email"
+        id="mail"
+        name="mail"
+        required
+        minlength="8"
+      />
+      <span class="error" aria-live="polite"></span>
+
+      <label for="country">Country</label>
+      <input
+        type="text"
+        id="country"
+        name="country"
+        required
+        pattern="[A-Za-z\s-]+"
+      />
+      <span class="error" aria-live="polite"></span>
+
+      <label for="postal">Postal Code</label>
+      <input
+        type="text"
+        id="postal"
+        name="postal"
+        required
+        pattern="\d{5}"
+      />
+      <span class="error" aria-live="polite"></span>
+
+      <label for="pswd">Password</label>
+      <input
+        type="password"
+        id="pswd"
+        name="pswd"
+        required
+        minlength="8"
+      />
+      <span class="error" aria-live="polite"></span>
+
+      <label for="pswdConfirm">Confirm Password</label>
+      <input
+        type="password"
+        id="pswdConfirm"
+        name="pswdConfirm"
+        required
+      />
+      <span class="error" aria-live="polite"></span>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const form = document.querySelector(".form");
+
+      const inputs = form.querySelectorAll("input");
+
+      // Custom validation rules
+      function validateCustom(input) {
+        input.setCustomValidity("");
+
+        if (input.id === "pswd") {
+          if (!/[!@#$%^&*(),.?":{}|<>]/.test(input.value)) {
+            input.setCustomValidity(
+              "Password must contain at least one special character."
+            );
+          }
+        }
+
+        if (input.id === "pswdConfirm") {
+          const password = form.querySelector("#pswd");
+
+          if (input.value !== password.value) {
+            input.setCustomValidity("Passwords do not match.");
+          }
+        }
+      }
+
+      // Error message handling
+      function showError(input) {
+        const error = input.nextElementSibling;
+
+        if (input.validity.valid) {
+          error.textContent = "";
+          error.classList.remove("active");
+          return;
+        }
+
+        if (input.validity.valueMissing) {
+          error.textContent = "This field is required.";
+        } else if (input.validity.typeMismatch) {
+          error.textContent = "Enter a valid email address.";
+        } else if (input.validity.tooShort) {
+          error.textContent = `Must contain at least ${input.minLength} characters.`;
+        } else if (input.validity.patternMismatch) {
+          if (input.id === "country") {
+            error.textContent = "Only letters, spaces, and hyphens are allowed.";
+          } else if (input.id === "postal") {
+            error.textContent = "Postal code must contain exactly 5 digits.";
+          }
+        } else {
+          error.textContent = input.validationMessage;
+        }
+
+        error.classList.add("active");
+      }
+
+      // Validate individual inputs
+      function validateInput(input) {
+        validateCustom(input);
+        showError(input);
+      }
+
+      // Listen for input changes
+      form.addEventListener("input", (event) => {
+        const input = event.target;
+
+        if (input.tagName !== "INPUT") return;
+
+        validateInput(input);
+
+        // Revalidate confirmation when original password changes
+        if (input.id === "pswd") {
+          validateInput(form.querySelector("#pswdConfirm"));
+        }
+      });
+
+      // Validate all inputs on submission
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        inputs.forEach((input) => {
+          validateInput(input);
+        });
+
+        if (form.checkValidity()) {
+          alert("Form submitted successfully!");
+          form.reset();
+        }
+      });
+    </script>
+  </body>
+</html>
+```

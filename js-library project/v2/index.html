@@ -1,36 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <script src="scripts.js" defer></script>
-</head>
+    <style>
+      input:valid {
+        border-color: orange;
+      }
 
-<body>
-    <body id="body">
-        <button id="open-dialog">Open-Dialog</button>
-        <dialog id="book-dialog">
-            <form action="#" method="post">
-                <p>
-                    <label for="book">Add Book Name: </label>
-                    <input type="text" id="book" name="book" placeholder="The Wizard of Oz">
-                </p>
+      input:invalid {
+        border-color: red;
+      }
 
-                <p>
-                    <label for="author">Add Author Name: </label>
-                    <input type="text" id="author" name="author" placeholder="Steven King">
-                </p>
-                <button type="submit">Add Book</button>
-                <button type="button" id="close-dialog">Cancel</button>
+      .error {
+        display: none;
+        color: #990000;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
 
-            </form>
-        </dialog>
+      .error.active {
+        display: block;
+      }
+    </style>
+  </head>
 
-        <div id="display">
-            <h1>BOOKS: </h1>
-        </div>G
-    </body>
+  <body id="body">
+    <button id="open-dialog">Open-Dialog</button>
+    <dialog id="book-dialog">
+      <form action="#" method="post" novalidate>
+        <p>
+          <label for="book">Add Book Name: </label>
+          <input
+            type="text"
+            id="book"
+            name="book"
+            placeholder="The Wizard of Oz"
+            required
+          />
+          <span class="error" id="bookSpan"></span>
+        </p>
+
+        <p>
+          <label for="author">Add Author Name: </label>
+          <input
+            type="text"
+            id="author"
+            name="author"
+            placeholder="Steven King"
+            required
+          />
+          <span class="error" id="authorSpan"></span>
+        </p>
+        <button type="submit">Add Book</button>
+        <button type="button" id="close-dialog">Cancel</button>
+      </form>
+    </dialog>
+
+    <div id="display">
+      <h1>BOOKS:</h1>
+    </div>
+    G
+
+    <script>
+      const book = document.querySelector("#book");
+      const bookSpan = document.querySelector("#book + span.error");
+      const author = document.querySelector("#author");
+      const authorSpan = document.querySelector("#author + span.error");
+
+      book.addEventListener("input", () => {
+        if (book.validity.valid) {
+          bookSpan.textContent = "";
+          bookSpan.className = "error";
+        } else {
+          showErrorBook();
+        }
+      });
+
+      author.addEventListener("input", () => {
+        if (author.validity.valid) {
+          authorSpan.textContent = "";
+          authorSpan.className = "error";
+        } else {
+          showErrorAuthor();
+        }
+      });
+
+      function showErrorBook() {
+        if (book.validity.valueMissing) {
+          bookSpan.textContent = "Book name must be filled!";
+        }
+        bookSpan.className = "error active";
+      }
+
+      function showErrorAuthor() {
+        if (author.validity.valueMissing) {
+          authorSpan.textContent = "Author name must be filled";
+        }
+        authorSpan.className = "error active";
+      }
+    </script>
+  </body>
 </html>
