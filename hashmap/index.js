@@ -6,10 +6,10 @@ class hashmap {
     this.bucket = Array.from({ length: this.capacity }, () => []);
   }
 
-  resize(old, key) {
+  resize(oldBucket, key) {
     const newBucket = Array.from({ length: this.capacity }, () => []);
 
-    old.map((item) => {
+    oldBucket.map((item) => {
       if (item.length === 0) return;
 
       const key = item[0];
@@ -48,6 +48,7 @@ class hashmap {
       this.bucket[idx] = [key, value];
       return;
     }
+    
     this.bucket[idx] = [key, value];
     this.len++;
   }
