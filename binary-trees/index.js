@@ -1,6 +1,6 @@
 class Node {
-  constructor() {
-    this.data = null;
+  constructor(data = null) {
+    this.data = data;
     this.left = null;
     this.right = null;
   }
@@ -9,7 +9,7 @@ class Node {
 class Tree {
   constructor(arr) {
     this.arr = this.sortRemoveDups(arr);
-    this.root = this.buildTree(arr);
+    this.root = this.#buildTree(this.arr);
   }
 
   sortRemoveDups(array) {
@@ -25,50 +25,112 @@ class Tree {
     return newArr;
   }
 
-  buildTree(array) {
-    // Method must turn our tree into a balanced binary tree (meaning heights of both left and right side must be similar)
-    // -preventing the tree from becoming too deep on one side.
-    array = this.sortRemoveDups(array);
+  #buildTree(array) {
     if (array.length === 0) return null;
     const mid = Math.floor(array.length / 2);
-
     const node = new Node();
     node.data = array[mid];
-    node.left = this.buildTree(array.slice(0, mid));
-    node.right = this.buildTree(array.slice(mid + 1, array.length));
+    node.left = this.#buildTree(array.slice(0, mid));
+    node.right = this.#buildTree(array.slice(mid + 1, array.length));
 
     return node;
   }
 
-  includes(node, value) {
-    //base base
-    // search left, search right (for right and left)
-    // return true
-    if (node === null) return false;
-    if (node.data === value) return true;
+  includes(value) {
+    let node = this.root;
+    while (node !== null) {
+      if (node.data === value) return true;
 
-    if (value < node.data) {
-      return this.includes(node.left, value);
-    } else {
-      return this.includes(node.right, value);
+      if (node.data > value) {
+        node = node.left;
+      } else {
+        node = node.right;
+      }
     }
+    return false;
   }
 
-  insert(node, value) {
-    if (node === null) {
-      let newNode = new Node();
-      newNode.data = value;
-      return newNode;
+  insert(value) {
+    let node = this.root;
+
+    while (true) {
+      if (node === null) {
+        let newNode = new Node();
+        newNode.data = value;
+        return;
+      }
+      if (node.data === value) return;
+      if (value < node.data) {
+        if (node.left === null) {
+          const newNode = new Node(value);
+          node.left = newNode;
+          return;
+        }
+        node = node.left;
+      } else if (node.right === null) {
+        const newNode = new Node(value);
+        node.right = newNode;
+        return;
+      }
+      node = node.right;
     }
-    if (node === value) return node;
-    if (value < node.data) {
-      node.left = this.insert(node.left, value);
-    } else {
-      node.right = this.insert(node.right, value);
-    }
-    return node;
+
+    // Add node as arg
+    // if (node === null) {
+    //   let newNode = new Node();
+    //   newNode.data = value;
+    //   return newNode;
+    // }
+    // if (node.data === value) return node;
+    // if (value < node.data) {
+    //   node.left = this.insert(node.left, value);
+    // } else {
+    //   node.right = this.insert(node.right, value);
+    // }
+    // return node;
   }
-  deleteItem(value) {}
+
+  deleteItem(value) {
+    let node = this.root;
+    let parent = null;
+    let lastMove = null;
+    let targetNode = null;
+
+    if (node === null) return;
+
+    while (node !== null) {
+      if (node.data === value) {
+        targetNode = node;
+        break;
+      }
+
+      parent = node;
+      if (node.data > value) {
+        node = node.left;
+        lastMove = "l";
+      } else {
+        node = node.right;
+        lastMove = "r";
+      }
+    }
+
+    // Handles No Children
+    if (targetNode.right === null && targetNode.left === null) {
+      if (lastMove === "r") {
+        parent.right = null;
+      } else {
+        parent.left = null;
+      }
+    }
+
+    // Handles if has one Child
+    const replacement = targetNode.left ?? targetNode.right;
+    if (lastMove === "r") {
+      parent.right = replacement;
+    } else {
+      parent.left = replacement;
+    }
+  }
   inOrderForEach(callback) {}
   preOrderForEach(callback) {}
   postOrderForEach(callback) {}
@@ -78,27 +140,25 @@ class Tree {
   rebalance() {}
 }
 
-// const tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
-const tree = new Tree([1, 2, 3, 5, 6, 4]);
-// console.log(tree.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])); //dupes are 4,7,9
-
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null || node === undefined) {
     return;
   }
-
   prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
   console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
   prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
 };
 
-// prettyPrint(
-//   tree.buildTree([[1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]]),
-// );
-// console.log(tree.arr);
-prettyPrint(tree.root);
-// console.log(tree.root);
+// const tree = new Tree([1, 2, 3, 5, 6, 4, 7, 100, 200, 300]);
+// tree.insert(7);
+// prettyPrint(tree.root);
 
-// console.log(tree.includes(tree.root, 12));
-tree.insert(tree.root, 7);
-prettyPrint(tree.root);
+// tree.deleteItem(100);
+// prettyPrint(tree.root);
+
+// Tree 2
+const tree2 = new Tree([1, 2, 3, 5, 6, 4, 7]);
+prettyPrint(tree2.root);
+console.log("=======")
+tree2.deleteItem(7);
+prettyPrint(tree2.root);
