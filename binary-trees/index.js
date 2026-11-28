@@ -5,7 +5,6 @@ class Node {
     this.right = null;
   }
 }
-
 class Tree {
   constructor(arr) {
     this.arr = this.sortRemoveDups(arr);
@@ -23,18 +22,6 @@ class Tree {
     }
 
     return newArr;
-  }
-
-  // Either is fine:
-  // In-order predecessor: Largest value smaller than the current node.
-  // In-order successor: Smallest value larger than the current node.
-  findSuccessor(node) {
-    node = node.right;
-    if (node === null) return;
-    while (node.left !== null) {
-      node = node.left;
-    }
-    return node;
   }
 
   #buildTree(array) {
@@ -113,7 +100,6 @@ class Tree {
   deleteItem(value) {
     let node = this.root;
     let parent = null;
-    let lastMove = null;
     let targetNode = null;
     if (node === null) return;
 
@@ -127,10 +113,8 @@ class Tree {
       parent = node;
       if (node.data > value) {
         node = node.left;
-        lastMove = "l";
       } else {
         node = node.right;
-        lastMove = "r";
       }
     }
 
@@ -142,23 +126,21 @@ class Tree {
         this.root = null;
         return;
       }
-      if (lastMove === "r") {
-        parent.right = null;
-      } else {
-        parent.left = null;
-      }
+      targetNode.data < parent.data
+        ? (parent.left = null)
+        : (parent.right = null);
       return;
     }
 
     // Handle if Target has two children
     if (targetNode.right !== null && targetNode.left !== null) {
-      let successor = this.findSuccessor(targetNode);
+      let [successor, succParent] = this.findSuccessor(targetNode);
       targetNode.data = successor.data;
 
-      if (targetNode.left === successor) {
-        targetNode.left = null;
+      if (succParent.left === successor) {
+        succParent.left = successor.right;
       } else {
-        targetNode.right = null;
+        succParent.right = successor.right;
       }
       return;
     }
@@ -166,14 +148,16 @@ class Tree {
     // Handles if Target has one Child
     const replacement = targetNode.left ?? targetNode.right;
     if (parent === null) {
-      targetNode.data = replacement.data;
-      lastMove === "r" ? (targetNode.right = null) : (targetNode.left = null);
+      this.root = replacement;
+      // targetNode.data < parent.data
+      //   ? (targetNode.left = null)
+      //   : (targetNode.right = null);
+
       return;
     }
-
-    lastMove === "r"
-      ? (parent.right = replacement)
-      : (parent.left = replacement);
+    targetNode.data < parent.data
+      ? (parent.left = replacement)
+      : (parent.right = replacement);
   }
 
   levelOrderForEach(callback) {
@@ -279,8 +263,48 @@ class Tree {
     return undefined;
   }
 
-  isBalanced() {}
-  rebalance() {}
+  isBalanced() {
+    function findHeight(node) {
+      if (node === null) {
+        return 0;
+      }
+
+      const left = findHeight(node.left);
+      if (left === -1) return -1;
+
+      const right = findHeight(node.right);
+      if (right === -1) return -1;
+
+      if (Math.abs(left - right) > 1) {
+        return -1;
+      }
+
+      return 1 + Math.max(left, right);
+    }
+
+    return findHeight(this.root) !== -1;
+  }
+
+  rebalance() {
+    let rebalanced = [];
+    this.inOrderForEach((val) => rebalanced.push(val));
+    this.root = this.#buildTree(rebalanced);
+    this.arr = this.sortRemoveDups(rebalanced);
+  }
+
+  // Either is fine:
+  // In-order predecessor: Largest value smaller than the current node.
+  // In-order successor: Smallest value larger than the current node.
+  findSuccessor(node) {
+    let parent = node;
+    node = node.right;
+    if (node === null) return;
+    while (node.left !== null) {
+      parent = node;
+      node = node.left;
+    }
+    return [node, parent];
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -293,8 +317,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // TEST
-const tree3 = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 19]);
-prettyPrint(tree3.root);
+// const tree3 = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+const tree = new Tree([10]);
+[20, 30].forEach((value) => tree.insert(value));
+prettyPrint(tree.root);
 // tree3.deleteItem(1);
 // prettyPrint(tree3.root);
 
@@ -303,4 +329,11 @@ prettyPrint(tree3.root);
 // console.log(tree3.postOrderForEach((val) => console.log(val)));
 // tree3.levelOrderForEach((val) => console.log(val));
 
-console.log(tree3.height(3));
+// console.log(tree3.height(3));
+// tree3.deleteItem(8);
+// prettyPrint(tree3.root);
+console.log(tree.isBalanced());
+tree.rebalance();
+
+prettyPrint(tree.root);
+console.log(tree.isBalanced());
